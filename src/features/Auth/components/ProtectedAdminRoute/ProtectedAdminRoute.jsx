@@ -1,33 +1,22 @@
 import React from "react";
-// import { Outlet } from "react-router-dom";
-// import React, { useEffect, useState } from "react";
-import { Route, Outlet, useNavigate } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import PageLayout from "@/layout/PageLayout/PageLayout";
 
 const ProtectedAdminRoute = () => {
-  const navigate = useNavigate();
-
-  // navigate("/dmin/dashboard");
-
   // get logged in user from localstorage
-  // const [user, setUser] = useState(
-  //   localStorage.getItem("user") ? true : null
-  // )
+  const user = localStorage.getItem("user");
+
   // check is admin
   // const [admin, setAdmin] = useState(
   //   localStorage.getItem("role") === "admin" ? true : null
   // )
+
   // check if logged in and redirct to login page
-  // useEffect(() => {
-  //   const loginCheck = () => {
-  //     if (!user) {
-  //       navigate("/auth/login");
-  //     }
-  //   }
+  if (!user) {
+    return <Navigate to="/auth/login" />;
+  }
 
-  //   loginCheck();
-  // }, [])
-
+  // else return next route
   return (
     <PageLayout>
       <Outlet />

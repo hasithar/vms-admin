@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   IconButton,
   Typography,
@@ -12,10 +14,11 @@ import {
 import { styled } from "@mui/material/styles";
 
 import defaultProfile from "@assets/images/default/defaultProfile.png";
+import { logoutUser } from "@/features/Auth";
 
 const Settings = () => {
-  // const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // const userId = JSON.parse(localStorage.getItem("user"))?.data?.id;
   // const isAdmin =
@@ -78,17 +81,6 @@ const Settings = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuItem>
-          <Typography textAlign="center" fontWeight={"bold"}>
-            Profile
-          </Typography>
-        </MenuItem>
-        <MenuItem>
-          <Typography textAlign="center" fontWeight={"bold"}>
-            Logout
-          </Typography>
-        </MenuItem>
-
         {/* <MenuItem>
           <Typography textAlign="center" fontWeight={"bold"}>
             {email}
@@ -108,15 +100,15 @@ const Settings = () => {
           <Typography textAlign="center">Profile</Typography>
         </MenuItem> */}
 
-        {/* <MenuItem
+        <MenuItem
           onClick={() => {
             handleCloseUserMenu();
-            dispatch(userActions.logout());
-            navigate(isAdmin ? "/auth/login" : "/login");
+            dispatch(logoutUser());
+            navigate("/auth/login");
           }}
         >
           <Typography textAlign="center">Logout</Typography>
-        </MenuItem> */}
+        </MenuItem>
       </Menu>
     </Box>
   );

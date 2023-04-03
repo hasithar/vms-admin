@@ -1,9 +1,13 @@
 .textField {
   :global {
-      .MuiFormHelperText-root {
-          position: absolute;
-          bottom: -1.125rem;
-          font-size: 0.7rem;
-      }
+    .MuiFormHelperText-root {
+      position: absolute;
+      bottom: -1.125rem;
+      font-size: 0.7rem;
+    }
   }
+}
+
+.uiAlert {
+  text-align: left;
 }

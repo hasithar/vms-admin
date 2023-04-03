@@ -27,12 +27,19 @@ const Auth = () => {
   return (
     <Container maxWidth={false} className={styles.wrapper}>
       <Container maxWidth={"sm"} className={styles.contentWrapper}>
-        {/* <img src={logo} alt="logo" className={styles.logo} /> */}
+        <img src={logo} alt="logo" className={styles.logoMobile} />
         <div className={styles.authContentWrapper}>
           <Card className={styles.card}>
             <CardContent className={styles.cardContent}>
               <Grid container>
-                <Grid item md={5} sx={{ display: { xs: "none", md: "block" }, position: "relative" }}>
+                <Grid
+                  item
+                  md={5}
+                  sx={{
+                    display: { xs: "none", md: "block" },
+                    position: "relative",
+                  }}
+                >
                   <img src={logo} alt="logo" className={styles.logo} />
                   <img src={cardImage} alt="" className={styles.cardImage} />
                 </Grid>

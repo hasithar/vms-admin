@@ -14,22 +14,15 @@ import {
   IconButton,
   Divider,
   FormHelperText,
-  Collapse,
-  Alert,
-  AlertTitle,
-  Fade,
 } from "@mui/material";
-import {
-  Visibility,
-  VisibilityOff,
-  Close as CloseIcon,
-} from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import styles from "./Login.module.scss";
 import { clearAlert } from "@/features/Common";
 import { loginUser, logoutUser } from "@/features/Auth";
+import UIAlert from "@/components/UI/UIAlert/UIAlert.component";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -118,43 +111,13 @@ const Login = () => {
           Please log in to your account before continue
         </Typography>
 
-        <Collapse in={alert?.severity && showErrorMessage}>
-          <Alert
-            severity={`${alert?.severity ? alert?.severity : "info"}`}
-            className={`login-alert login-alert-${alert?.severity}`}
-            sx={{ mt: 3, mb: -1 }}
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => {
-                  setShowErrorMessage(false);
-                }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-          >
-            <Fade
-              in={alert?.severity && showErrorMessage}
-              {...(alert?.severity && showErrorMessage ? { timeout: 500 } : {})}
-            >
-              <AlertTitle className="alert-title" sx={{ fontSize: "0.8rem" }}>
-                {alert?.title}
-              </AlertTitle>
-            </Fade>
-
-            <Fade
-              in={alert?.severity && showErrorMessage}
-              {...(alert?.severity && showErrorMessage
-                ? { timeout: 1500 }
-                : {})}
-            >
-              <small>{alert?.description}</small>
-            </Fade>
-          </Alert>
-        </Collapse>
+        <div className={styles.uiAlert}>
+          <UIAlert
+            alert={alert}
+            showErrorMessage={showErrorMessage}
+            setShowErrorMessage={setShowErrorMessage}
+          />
+        </div>
       </Box>
 
       <Box>

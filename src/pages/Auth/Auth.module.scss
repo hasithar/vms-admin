@@ -41,9 +41,16 @@
   top: 5rem;
 }
 
+.logoMobile {
+  max-width: 15rem;
+  margin: 0 auto 2.4rem auto;
+  display: block;
+}
+
 .cardContent {
   display: flex;
   padding: 0 !important;
+  text-align: center;
 }
 
 .cardImage {
@@ -55,6 +62,16 @@
 
 .outletWrapper {
   padding: 2.4rem;
+}
+
+@media (min-width: 992px) {
+  .logoMobile {
+    display: none;
+  }
+
+  .cardContent {
+    text-align: left;
+  }
 }
 
 @media (min-width: 1200px) {
