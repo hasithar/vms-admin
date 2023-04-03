@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { store } from "./store";
+import store from "./store";
 import { Provider } from "react-redux";
 import { CssBaseline, createTheme, ThemeProvider } from "@mui/material";
 import App from "./App";

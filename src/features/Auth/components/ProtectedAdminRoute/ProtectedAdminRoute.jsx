@@ -1,11 +1,13 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 // import React, { useEffect, useState } from "react";
-// import { Route, Outlet, useNavigate } from "react-router-dom";
+import { Route, Outlet, useNavigate } from "react-router-dom";
 import PageLayout from "@/layout/PageLayout/PageLayout";
 
 const ProtectedAdminRoute = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  // navigate("/dmin/dashboard");
 
   // get logged in user from localstorage
   // const [user, setUser] = useState(

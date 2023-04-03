@@ -1,9 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { configureStore } from "@reduxjs/toolkit";
+import { authenticationReducer } from "../features/Auth";
+import { alertReducer } from "../features/Common";
 
-// import counterReducer from '../features/counter/counterSlice'
+const reducer = {
+  alert: alertReducer,
+  authentication: authenticationReducer,
+};
 
-export const store = configureStore({
-  reducer: {
-    // counter: counterReducer,
-  },
-})
+const store = configureStore({
+  reducer,
+  devTools: true,
+});
+
+export default store;

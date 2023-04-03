@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { userActions } from "../../../actions";
-// import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Grid,
   Box,
@@ -25,71 +24,81 @@ import {
   VisibilityOff,
   Close as CloseIcon,
 } from "@mui/icons-material";
-// import LoadingButton from "@mui/lab/LoadingButton";
-// import { Form, Formik } from "formik";
-// import * as Yup from "yup";
-// import styles from "./Login.module.scss";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Form, Formik } from "formik";
+import * as Yup from "yup";
+import styles from "./Login.module.scss";
+import { clearAlert } from "@/features/Common";
+import { loginUser, logoutUser } from "@/features/Auth";
 
 const Login = () => {
-  // const dispatch = useDispatch();
-  // const alert = useSelector((state) => state.alert);
-  // const authentication = useSelector((state) => state.authentication);
-  // const navigate = useNavigate();
-  // const formikRef = React.createRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // // logiut user upon visiting the login page
-  // useEffect(() => {
-  //   dispatch(userActions.logout());
-  // }, [dispatch]);
+  const alert = useSelector((state) => state.alert);
+  const authentication = useSelector((state) => state.authentication);
 
-  // const debug = false;
+  const [showPassword, setShowpassword] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
-  // const [showPassword, setShowpassword] = useState(false);
-  const [showErrorMessage, setShowErrorMessage] = useState(true);
+  const debug = false;
 
-  // const validationSchema = Yup.object({
-  //   username: Yup.string().required("Username is required"),
-  //   password: Yup.string().required("Password is required"),
-  // });
+  const formikRef = React.createRef();
 
-  // const initialValues = {
-  //   username: "",
-  //   password: "",
-  // };
+  const initialValues = {
+    username: "",
+    password: "",
+  };
 
-  // useEffect(() => {
-  //   const updateFormSubmitting = () => {
-  //     if (!authentication.loggingIn && !authentication.loggedIn && alert) {
-  //       formikRef.current.setSubmitting(false);
-  //       // formikRef.current.resetForm();
-  //     }
-  //   };
-  //   updateFormSubmitting();
-  // }, [authentication, formikRef, alert]);
+  // login form validation schema
+  const validationSchema = Yup.object({
+    username: Yup.string().required("Username is required"),
+    password: Yup.string().required("Password is required"),
+  });
 
-  // useEffect(() => {
-  //   const updateErrorMessage = () => {
-  //     if (alert) {
-  //       setShowErrorMessage(true);
-  //     }
-  //   };
-  //   updateErrorMessage();
-  // }, [alert]);
+  // logout user upon visiting the login page and clear messages
+  useEffect(() => {
+    dispatch(clearAlert());
+    dispatch(logoutUser());
+  }, [dispatch]);
 
-  // const handleSubmit = (values, props) => {
-  //   // props.setSubmitting(true);
-  //   handleLogin(values);
-  // };
+  // set submission status
+  useEffect(() => {
+    const updateFormSubmitting = () => {
+      if (!authentication.isLoading && !authentication.isLoggedIn && alert) {
+        formikRef.current.setSubmitting(false);
+      }
+    };
+    updateFormSubmitting();
+  }, [authentication, formikRef, alert]);
 
-  // const handleLogin = (values) => {
-  //   if (values.username && values.password) {
-  //     dispatch(userActions.login(values.username, values.password));
-  //   }
-  // };
+  // update error message display
+  useEffect(() => {
+    const updateErrorMessage = () => {
+      if (alert) {
+        setShowErrorMessage(true);
+      }
+    };
+    updateErrorMessage();
+  }, [alert]);
 
-  // if (authentication.loggedIn && authentication.user) {
-  //   navigate("./../../dashboard", { replace: true });
-  // }
+  // handle login form submission
+  const handleSubmit = (values) => {
+    dispatch(clearAlert());
+    handleLogin(values);
+  };
+
+  // handle login
+  const handleLogin = (values) => {
+    if (values.username && values.password) {
+      dispatch(loginUser(values.username, values.password));
+    }
+  };
+
+  // redirect user to the dashboard upon successful login
+  if (authentication.isLoggedIn && authentication.user) {
+    navigate("/admin/dashboard", { replace: true });
+  }
 
   return (
     <div>
@@ -109,10 +118,10 @@ const Login = () => {
           Please log in to your account before continue
         </Typography>
 
-        <Collapse in={alert.type && showErrorMessage}>
+        <Collapse in={alert?.severity && showErrorMessage}>
           <Alert
-            severity={alert.type}
-            className={`login-alert login-alert-${alert.type}`}
+            severity={`${alert?.severity ? alert?.severity : "info"}`}
+            className={`login-alert login-alert-${alert?.severity}`}
             sx={{ mt: 3, mb: -1 }}
             action={
               <IconButton
@@ -128,26 +137,28 @@ const Login = () => {
             }
           >
             <Fade
-              in={alert.type && showErrorMessage}
-              {...(alert.type && showErrorMessage ? { timeout: 500 } : {})}
+              in={alert?.severity && showErrorMessage}
+              {...(alert?.severity && showErrorMessage ? { timeout: 500 } : {})}
             >
               <AlertTitle className="alert-title" sx={{ fontSize: "0.8rem" }}>
-                {alert.description}
+                {alert?.title}
               </AlertTitle>
             </Fade>
 
-            {/* <Fade
-              in={alert.type && showErrorMessage}
-              {...(alert.type && showErrorMessage ? { timeout: 1500 } : {})}
+            <Fade
+              in={alert?.severity && showErrorMessage}
+              {...(alert?.severity && showErrorMessage
+                ? { timeout: 1500 }
+                : {})}
             >
-              <small>{alert?.message}</small>
-            </Fade> */}
+              <small>{alert?.description}</small>
+            </Fade>
           </Alert>
         </Collapse>
       </Box>
 
       <Box>
-        {/* <Formik
+        <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           innerRef={formikRef}
@@ -242,9 +253,9 @@ const Login = () => {
                     variant="contained"
                     color="secondary"
                     sx={{ marginTop: "1rem" }}
-                    loading={authentication.loggingIn}
+                    loading={authentication.isLoading}
                   >
-                    {authentication.loggingIn ? "Signing in" : "Sign in"}
+                    {authentication.isLoading ? "Signing in" : "Sign in"}
                   </LoadingButton>
                 </Grid>
 
@@ -277,7 +288,7 @@ const Login = () => {
               )}
             </Form>
           )}
-        </Formik> */}
+        </Formik>
       </Box>
     </div>
   );
