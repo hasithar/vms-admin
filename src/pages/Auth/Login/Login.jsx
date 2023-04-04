@@ -196,6 +196,7 @@ const Login = () => {
                             }}
                             onMouseDown={(e) => e.preventDefault()}
                             edge="end"
+                            id="toggle-password"
                           >
                             {showPassword ? <VisibilityOff /> : <Visibility />}
                           </IconButton>
