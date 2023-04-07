@@ -1,17 +1,25 @@
 // components
-import { CustomerTable } from "./Customer";
+import { CustomerTable, CustomerForm } from "./Customer";
 
 // services
-import { fetchAll, deleteSingle } from "./Customer";
+import { getAllParameters, addParameter, deleteParameter } from "./Customer";
 
 // reducers
-import { customerReducer, getAllCustomers, deleteCustomer } from "./Customer";
+import {
+  customerReducer,
+  getAllCustomers,
+  addCustomer,
+  deleteCustomer,
+} from "./Customer";
 
 export {
   CustomerTable,
-  fetchAll,
-  deleteSingle,
+  CustomerForm,
+  getAllParameters,
+  addParameter,
+  deleteParameter,
   customerReducer,
   getAllCustomers,
+  addCustomer,
   deleteCustomer,
 };

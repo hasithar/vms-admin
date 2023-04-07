@@ -2,7 +2,7 @@ import axios from "axios";
 import { apiConstants } from "@/constants";
 import { authHeader } from "@/utils";
 
-const fetchAll = async () => {
+const getAllParameters = async () => {
   const requestOptions = {
     headers: authHeader(),
   };
@@ -18,7 +18,24 @@ const fetchAll = async () => {
   }
 };
 
-const deleteSingle = async (id) => {
+const addParameter = async (data) => {
+  const requestOptions = {
+    headers: authHeader(),
+  };
+
+  try {
+    const response = await axios.post(
+      `${apiConstants.API_URL}/customers`,
+      data,
+      requestOptions
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteParameter = async (id) => {
   const requestOptions = {
     headers: authHeader(),
   };
@@ -34,7 +51,7 @@ const deleteSingle = async (id) => {
   }
 };
 
-export { fetchAll, deleteSingle };
+export { getAllParameters, addParameter, deleteParameter };
 
 // import { apiConstants } from "../constants";
 // import { authHeader } from "../helpers";

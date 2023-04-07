@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
 import { getAllCustomers, deleteCustomer } from "@/features/Admin";
-import UIDatatable from "@/components/UI/UIAlert/UIDatatable/UIDatatable.component";
+import UIDatatable from "@/components/UI/UIDatatable/UIDatatable.component";
 import UIAlert from "@/components/UI/UIAlert/UIAlert.component";
 
 const CustomerTable = () => {
@@ -155,7 +155,6 @@ const CustomerTable = () => {
           columnVisibilityModel={columnVisibilityModel}
           recordIdentifier={recordIdentifier}
           paramIdentifier={paramIdentifier}
-          //           actionIdentifier="organizationActions"
         />
       )}
     </Box>
@@ -163,79 +162,3 @@ const CustomerTable = () => {
 };
 
 export default CustomerTable;
-
-// import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { Box } from "@mui/material";
-// import {
-//   organizationActions,
-//   paymentTermActions,
-//   countryActions,
-// } from "../../../../actions";
-// import DataTable from "../../../common/ui/table/DataTable/DataTable.component";
-// import { checkPermission } from "../../../../helpers/helpers";
-
-// const OrganizationTable = () => {
-//   const dispatch = useDispatch();
-//   const organizations = useSelector((state) => state.organizations);
-//   const paymentTerms = useSelector((state) => state.paymentTerms);
-//   const countries = useSelector((state) => state.countries);
-//   const [dataFotmatted, setDataFormatted] = useState();
-//   const isEnabledEdit = checkPermission('Edit Organizations');
-
-//   useEffect(() => {
-//     dispatch(organizationActions.getAllParameters());
-//     dispatch(paymentTermActions.getAllParameters());
-//     dispatch(countryActions.getAllParameters());
-//   }, [dispatch]);
-
-//   useEffect(() => {
-//     const formatData = () => {
-//       if (
-//         paymentTerms?.items?.data &&
-//         organizations?.items?.data &&
-//         countries?.items?.data
-//       ) {
-//         const formattedData = organizations?.items?.data.map((item) => {
-//           const { payment_term_id, country_id, ...rest } = item;
-//           const paymentTerm = paymentTerms?.items?.data.filter((term) => {
-//             return term.id === payment_term_id;
-//           });
-//           const country = countries?.items?.data.filter((term) => {
-//             return term.id === country_id;
-//           });
-//           rest.payment_term_id = paymentTerm[0].name;
-//           rest.country_id = country[0].name;
-
-//           return rest;
-//         });
-
-//         setDataFormatted(formattedData);
-//       }
-//     };
-
-//     formatData();
-//   }, [
-//     paymentTerms?.items?.data,
-//     organizations?.items?.data,
-//     countries?.items?.data,
-//   ]);
-
-//   return (
-//     <Box>
-//       {organizations && (
-//         <DataTable
-//           loading={organizations?.loading || paymentTerms?.loading}
-//           rows={dataFotmatted}
-//           columns={columns}
-//           recordIdentifier={recordIdentifier}
-//           actionIdentifier="organizationActions"
-//           isEnabledEdit={isEnabledEdit}
-//           isEnabledDelete={false}
-//         />
-//       )}
-//     </Box>
-//   );
-// };
-
-// export default OrganizationTable;
