@@ -1,7 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllParameters,
+  getSingleParameter,
   addParameter,
+  updateParameter,
   deleteParameter,
 } from "../services/customer.service";
 import { clearAlert, showAlert } from "@/features/Common";
@@ -19,7 +21,15 @@ const customerSlice = createSlice({
       state.data = action.payload;
       state.loading = false;
     },
+    getSingle: (state, action) => {
+      state.data = action.payload;
+      state.loading = false;
+    },
     addSingle: (state, action) => {
+      state.data = action.payload;
+      state.loading = false;
+    },
+    updateSingle: (state, action) => {
       state.data = action.payload;
       state.loading = false;
     },
@@ -33,7 +43,8 @@ const customerSlice = createSlice({
   },
 });
 
-export const { getAll, addSingle, setLoading, clear } = customerSlice.actions;
+export const { getAll, getSingle, addSingle, updateSingle, setLoading, clear } =
+  customerSlice.actions;
 
 // export const selectToken = (state) => state.authentication.token;
 // export const selectIsLoggedIn = (state) => state.authentication.isLoggedIn;
@@ -58,6 +69,29 @@ export const getAllCustomers = () => async (dispatch) => {
   }
 };
 
+export const getCustomer = (id) => async (dispatch) => {
+  dispatch(clearAlert());
+
+  try {
+    dispatch(setLoading(true));
+    dispatch(clear());
+    const response = await getSingleParameter(id);
+    dispatch(getSingle(response));
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(setLoading(false));
+    if (error.response) {
+      dispatch(
+        showAlert({
+          title: error?.response?.data?.message,
+          description: error?.response?.data?.description,
+          severity: error?.response?.data?.severity,
+        })
+      );
+    }
+  }
+};
+
 export const addCustomer = (data) => async (dispatch) => {
   dispatch(clearAlert());
 
@@ -66,6 +100,36 @@ export const addCustomer = (data) => async (dispatch) => {
     dispatch(clear());
     const response = await addParameter(data);
     dispatch(addSingle(response?.data));
+    dispatch(
+      showAlert({
+        title: response?.message,
+        description: response?.description,
+        severity: response?.severity,
+      })
+    );
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(setLoading(false));
+    if (error.response) {
+      dispatch(
+        showAlert({
+          title: error?.response?.data?.message,
+          description: error?.response?.data?.description,
+          severity: error?.response?.data?.severity,
+        })
+      );
+    }
+  }
+};
+
+export const updateCustomer = (id, data) => async (dispatch) => {
+  dispatch(clearAlert());
+
+  try {
+    dispatch(setLoading(true));
+    dispatch(clear());
+    const response = await updateParameter(id, data);
+    dispatch(updateSingle(response?.data));
     dispatch(
       showAlert({
         title: response?.message,

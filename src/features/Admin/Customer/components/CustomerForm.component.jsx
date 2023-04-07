@@ -18,7 +18,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import styles from "./../styles/CustomerForm.module.scss";
-import { addCustomer } from "../slices/customer.slice";
+import { addCustomer, updateCustomer } from "../slices/customer.slice";
 
 const CustomerForm = (props) => {
   const { params, handleSuccessDialog, handleErrorAlert } = props;
@@ -41,13 +41,13 @@ const CustomerForm = (props) => {
     phone: Yup.string()
       .required("Phone number is required")
       .matches(/^[0-9-+]{10,}$/, "Please enter a valid phone number"),
-    email: Yup.string().email(),
-    address: Yup.string(),
-    city: Yup.string(),
-    referredBy: Yup.string(),
-    assignedTo: Yup.string(),
+    email: Yup.string().email().nullable(true),
+    address: Yup.string().nullable(true),
+    city: Yup.string().nullable(true),
+    referredBy: Yup.string().nullable(true),
+    assignedTo: Yup.string().nullable(true),
     status: Yup.number().required("Status is required"),
-    comments: Yup.string().max(600),
+    comments: Yup.string().max(600).nullable(true),
   });
 
   const initialValues = {
@@ -77,14 +77,7 @@ const CustomerForm = (props) => {
       dispatch(addCustomer(values));
     }
     if (values && params?.mode === "edit") {
-      console.log("edit submit");
-      // dispatch(
-      //   userActions.updateUser(
-      //     paramdata.id,
-      //     values.firstname,
-      //     values.lastname,
-      //   )
-      // );
+      dispatch(updateCustomer(params?.data?._id, values));
     }
   };
 
@@ -119,6 +112,32 @@ const CustomerForm = (props) => {
     handleSuccessDialog,
     params,
   ]);
+
+  useEffect(() => {
+    const prefillData = () => {
+      if (params?.mode === "edit" && params?.data) {
+        const fields = [
+          "title",
+          "firstname",
+          "lastname",
+          "phone",
+          "email",
+          "address",
+          "city",
+          "referredBy",
+          "assignedTo",
+          "status",
+          "comments",
+        ];
+
+        fields.forEach((field) =>
+          formikRef.current.setFieldValue(field, params?.data[field], false)
+        );
+      }
+    };
+
+    prefillData();
+  }, [formikRef, params?.data, params?.mode]);
 
   return (
     <div>
@@ -290,7 +309,7 @@ const CustomerForm = (props) => {
                   fullWidth
                   id="comments"
                   name="comments"
-                  label="comments"
+                  label="Comments"
                   value={values.comments}
                   onChange={handleChange}
                   onBlur={handleBlur}

@@ -52,7 +52,7 @@ const UIDatatable = (props) => {
 
           const actionEdit = (e) => {
             setCurrentRecord(params.row);
-            navigate(`./${params?.row?.id}/edit`, {
+            navigate(`./${params?.row?._id}/edit`, {
               state: {
                 param: params.row,
                 mode: "edit",
