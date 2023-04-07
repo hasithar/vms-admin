@@ -31,7 +31,10 @@ const RowActions = (props) => {
   return (
     <>
       <ButtonGroup variant="outlined" ref={anchorRef} size="small">
-        <Button onClick={options[0].action}>{options[0].label}</Button>
+        {options[0]?.active && (
+          <Button onClick={options[0].action}>{options[0].label}</Button>
+        )}
+
         <Button onClick={handleToggle}>
           <ArrowDropDownIcon />
         </Button>

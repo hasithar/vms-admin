@@ -34,6 +34,7 @@ const UIDatatable = (props) => {
   useEffect(() => {
     const updateColumns = () => {
       const c = [];
+      const { viewParam, editParam, deleteParam } = paramIdentifier?.actions;
 
       columns.map((column, i) => c.push(columns[i]));
       c.push({
@@ -68,17 +69,17 @@ const UIDatatable = (props) => {
             {
               label: "View",
               action: actionView,
-              active: true,
+              active: viewParam?.active,
             },
             {
               label: "Edit",
               action: actionEdit,
-              active: true,
+              active: editParam?.active,
             },
             {
               label: "Delete",
               action: actionDelete,
-              active: false,
+              active: deleteParam?.active,
             },
           ];
 
@@ -90,7 +91,7 @@ const UIDatatable = (props) => {
     };
 
     updateColumns();
-  }, [columns, navigate]);
+  }, [columns, navigate, paramIdentifier?.actions]);
 
   return (
     <Box>

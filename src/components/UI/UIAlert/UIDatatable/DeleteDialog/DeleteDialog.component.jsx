@@ -32,22 +32,10 @@ const DeleteDialog = (props) => {
   const dispatch = useDispatch();
 
   const alertState = useSelector((state) => state.alert);
-  console.log(
-    "🚀 ~ file: DeleteDialog.component.jsx:35 ~ DeleteDialog ~ alertState:",
-    alertState
-  );
 
   const [open, setOpen] = useState(false);
   const [success, setSuccess] = useState(false);
-  console.log(
-    "🚀 ~ file: DeleteDialog.component.jsx:38 ~ DeleteDialog ~ success:",
-    success
-  );
   const [fail, setFail] = useState(false);
-  console.log(
-    "🚀 ~ file: DeleteDialog.component.jsx:40 ~ DeleteDialog ~ fail:",
-    fail
-  );
 
   useEffect(() => {
     const updateOpen = () => {
@@ -84,7 +72,7 @@ const DeleteDialog = (props) => {
   };
 
   const handleDelete = () => {
-    dispatch(paramIdentifier?.actions?.delete(record["_id"]));
+    dispatch(paramIdentifier?.actions?.deleteParam?.action(record["_id"]));
   };
 
   return (
@@ -156,25 +144,24 @@ const DeleteDialog = (props) => {
               Please confirm your action.
             </DialogContentText>
           )}
-          <DialogContentText>
-            {paramIdentifier?.state?.loading && (
-              <Box>
-                <Stack
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{ pt: 6, pb: 2 }}
-                >
-                  <CircularProgress />
-                </Stack>
-              </Box>
-            )}
 
-            {(success || fail) && (
-              <Alert severity={alertState?.severity} icon={false}>
-                {alertState?.title} {alertState?.description}
-              </Alert>
-            )}
-          </DialogContentText>
+          {paramIdentifier?.state?.loading && (
+            <Box>
+              <Stack
+                justifyContent="center"
+                alignItems="center"
+                sx={{ pt: 6, pb: 2 }}
+              >
+                <CircularProgress />
+              </Stack>
+            </Box>
+          )}
+
+          {(success || fail) && (
+            <Alert severity={alertState?.severity} icon={false}>
+              {alertState?.title} {alertState?.description}
+            </Alert>
+          )}
         </DialogContent>
         <DialogActions>
           <Stack

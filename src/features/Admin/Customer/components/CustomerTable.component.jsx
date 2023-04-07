@@ -20,7 +20,16 @@ const CustomerTable = () => {
   const paramIdentifier = {
     name: "Customer",
     actions: {
-      delete: deleteCustomer,
+      viewParam: {
+        active: true,
+      },
+      editParam: {
+        active: true,
+      },
+      deleteParam: {
+        active: true,
+        action: deleteCustomer,
+      },
     },
     state: customers,
   };
