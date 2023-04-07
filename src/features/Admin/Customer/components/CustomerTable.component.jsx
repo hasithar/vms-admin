@@ -115,7 +115,7 @@ const CustomerTable = () => {
 
   useEffect(() => {
     const formatData = () => {
-      if (customers?.data) {
+      if (customers?.data?.length > 0) {
         const formattedData = customers?.data.map((customer, i) => {
           const {
             __v,
@@ -137,7 +137,7 @@ const CustomerTable = () => {
     };
 
     formatData();
-  }, [customers?.data]);
+  }, [customers]);
 
   return (
     <Box>

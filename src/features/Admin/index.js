@@ -2,13 +2,13 @@
 import { CustomerTable, CustomerForm } from "./Customer";
 
 // services
-import {
-  getAllParameters,
-  getSingleParameter,
-  addParameter,
-  updateParameter,
-  deleteParameter,
-} from "./Customer";
+// import {
+//   getAllParameters,
+//   getSingleParameter,
+//   addParameter,
+//   updateParameter,
+//   deleteParameter,
+// } from "./Customer";
 
 // reducers
 import {
@@ -23,11 +23,11 @@ import {
 export {
   CustomerTable,
   CustomerForm,
-  getAllParameters,
-  getSingleParameter,
-  addParameter,
-  updateParameter,
-  deleteParameter,
+  // getAllParameters,
+  // getSingleParameter,
+  // addParameter,
+  // updateParameter,
+  // deleteParameter,
   customerReducer,
   getAllCustomers,
   getCustomer,
