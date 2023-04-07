@@ -15,8 +15,8 @@ import Paper from "@mui/material/Paper";
  */
 
 // Auth
-import Auth from './pages/Auth/Auth';
-import Login from './pages/Auth/Login/Login';
+import Auth from "./pages/Auth/Auth";
+import Login from "./pages/Auth/Login/Login";
 import ProtectedAdminRoute from "./features/Auth/components/ProtectedAdminRoute/ProtectedAdminRoute";
 
 /*
@@ -26,13 +26,13 @@ import ProtectedAdminRoute from "./features/Auth/components/ProtectedAdminRoute/
  */
 
 // Dashboard
-import AdminDashboard from './pages/Admin/Dashboard/Dashboard';
+import AdminDashboard from "./pages/Admin/Dashboard/Dashboard";
 
 // Parameter Management
-import ParameterManagement from './pages/Admin/ParameterManagement/ParameterManagement';
-import ParameterAdd from './pages/Admin/ParameterManagement/ParameterAdd/ParameterAdd';
-import ParameterEdit from './pages/Admin/ParameterManagement/ParameterEdit/ParameterEdit';
-import ParameterList from './pages/Admin/ParameterManagement/ParameterList/ParameterList';
+import ParameterManagement from "./pages/Admin/ParameterManagement/ParameterManagement";
+import ParameterAdd from "./pages/Admin/ParameterManagement/ParameterAdd/ParameterAdd";
+import ParameterEdit from "./pages/Admin/ParameterManagement/ParameterEdit/ParameterEdit";
+import ParameterList from "./pages/Admin/ParameterManagement/ParameterList/ParameterList";
 
 // Customers
 import CustomerAdd from "./pages/Admin/CustomerManagement/CustomerAdd/CustomerAdd";
@@ -40,19 +40,19 @@ import CustomerEdit from "./pages/Admin/CustomerManagement/CustomerEdit/Customer
 import CustomerList from "./pages/Admin/CustomerManagement/CustomerList/CustomerList";
 
 // Reservations
-import Reservations from './pages/Admin/Reservations/Reservations';
+import Reservations from "./pages/Admin/Reservations/Reservations";
 
 // Appointments
-import Appointments from './pages/Admin/Appointments/Appointments';
+import Appointments from "./pages/Admin/Appointments/Appointments";
 
 // Invoices
-import Invoices from './pages/Admin/Invoices/Invoices';
+import Invoices from "./pages/Admin/Invoices/Invoices";
 
 // Suppliers
-import Suppliers from './pages/Admin/Suppliers/Suppliers';
+import Suppliers from "./pages/Admin/Suppliers/Suppliers";
 
 // Inventory
-import Inventory from './pages/Admin/Inventory/Inventory';
+import Inventory from "./pages/Admin/Inventory/Inventory";
 
 const App = (props) => {
   // const dispatch = useDispatch();
@@ -62,63 +62,58 @@ const App = (props) => {
   // });
 
   return (
-      <Paper className="App" elevation={0}>
-        <BrowserRouter>
+    <Paper className="App" elevation={0}>
+      <BrowserRouter>
         <Routes>
-            {/* Auth */}
-            <Route path="auth" element={<Auth />}>
-              <Route path="login" element={<Login />} />
-            </Route>
+          {/* Auth */}
+          <Route path="auth" element={<Auth />}>
+            <Route path="login" element={<Login />} />
+          </Route>
 
-            {/* Admin */}
-            <Route path="/admin" element={<ProtectedAdminRoute />}>
-              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          {/* Admin */}
+          <Route path="/admin" element={<ProtectedAdminRoute />}>
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-              <Route path="/admin/parameter-management">
-                <Route index element={<ParameterManagement />} />
+            <Route path="/admin/parameter-management">
+              <Route index element={<ParameterManagement />} />
 
-                <Route path=":parameter">
-                  <Route index element={<ParameterList />} />
-                  <Route
-                    path="/admin/parameter-management/:parameter/add"
-                    element={<ParameterAdd />}
-                  />
-                  <Route
-                    path="/admin/parameter-management/:parameter/:id/edit"
-                    element={<ParameterEdit />}
-                  />
-                </Route>
-              </Route>
-
-              <Route path="/admin/customer-management">
-                <Route index element={<CustomerList />} />
+              <Route path=":parameter">
+                <Route index element={<ParameterList />} />
                 <Route
-                  path="/admin/customer-management/add"
-                  element={<CustomerAdd />}
+                  path="/admin/parameter-management/:parameter/add"
+                  element={<ParameterAdd />}
                 />
                 <Route
-                  path="/admin/customer-management/:id/edit"
-                  element={<CustomerEdit />}
+                  path="/admin/parameter-management/:parameter/:id/edit"
+                  element={<ParameterEdit />}
                 />
               </Route>
-
-              <Route path="/admin/reservations" element={<Reservations />} />
-
-              <Route path="/admin/appointments" element={<Appointments />} />
-
-              <Route path="/admin/invoices" element={<Invoices />} />
-
-              <Route path="/admin/suppliers" element={<Suppliers />} />
-
-              <Route path="/admin/inventory" element={<Inventory />} />
             </Route>
 
-             {/* Not found */}
-             {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="/admin/customers">
+              <Route index element={<CustomerList />} />
+              <Route path="/admin/customers/add" element={<CustomerAdd />} />
+              <Route
+                path="/admin/customers/:id/edit"
+                element={<CustomerEdit />}
+              />
+            </Route>
 
+            <Route path="/admin/reservations" element={<Reservations />} />
 
+            <Route path="/admin/appointments" element={<Appointments />} />
 
-            {/* customer login
+            <Route path="/admin/invoices" element={<Invoices />} />
+
+            <Route path="/admin/suppliers" element={<Suppliers />} />
+
+            <Route path="/admin/inventory" element={<Inventory />} />
+          </Route>
+
+          {/* Not found */}
+          {/* <Route path="*" element={<NotFound />} /> */}
+
+          {/* customer login
             <Route path="/login" element={<Auth />}>
               <Route index element={<CustomerLogin />} />
             </Route>
@@ -237,11 +232,9 @@ const App = (props) => {
             {/* open routes 
             <Route path="/quotation/:id/accept" element={<AcceptQuotation />} /> 
 {*/}
-
-           
-          </Routes>
-        </BrowserRouter>
-      </Paper>
+        </Routes>
+      </BrowserRouter>
+    </Paper>
   );
 };
 

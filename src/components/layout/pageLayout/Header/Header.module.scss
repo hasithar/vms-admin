@@ -1,0 +1,15 @@
+.clock {
+  text-align: left !important;
+  font-size: 0.725rem;
+  display: flex;
+  margin-top: 0.25rem;
+
+  div {
+    text-align: left !important;
+    font-size: 0.725rem;
+
+    span {
+      color: #6a276a !important;
+    }
+  }
+}

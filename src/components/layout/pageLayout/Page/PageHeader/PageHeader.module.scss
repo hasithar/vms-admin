@@ -1,0 +1,26 @@
+@import "./../../../../../assets/styles/global/colors";
+
+.breadcrumbs {
+  margin-top: 1.2rem;
+  font-size: 0.8rem !important;
+
+  p,
+  a,
+  svg {
+    font-size: 0.8rem !important;
+  }
+
+  li {
+    a {
+      text-decoration: none;
+      opacity: 0.7;
+      color: #232323;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        color: $secondary;
+        opacity: 1;
+      }
+    }
+  }
+}

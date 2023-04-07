@@ -3,6 +3,7 @@ import React from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import { userActions } from "../../../../actions";
 // import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 import {
   AppBar,
   Toolbar,
@@ -16,12 +17,15 @@ import {
   NotificationsNoneTwoTone as NotificationsNoneTwoToneIcon,
   MenuTwoTone as MenuTwoToneIcon,
 } from "@mui/icons-material";
-
-import Search from "./Search/Search.component";
+import Clock from "react-digital-clock";
+// import Search from "./Search/Search.component";
 import Settings from "./Settings/Settings";
+import styles from "./Header.module.scss";
 
 const Header = (props) => {
   const { open, toggleDrawer, theme, drawerWidth } = props;
+
+  const today = format(new Date(), "eeee, MMMM d, yyyy");
 
   const drawerOpen = {
     marginLeft: drawerWidth,
@@ -74,29 +78,40 @@ const Header = (props) => {
           <MenuTwoToneIcon />
         </IconButton>
 
-        <Search />
+        {/* <Search /> */}
 
         <Typography
           component="h1"
           variant="h6"
           color="inherit"
           noWrap
-          sx={{ flexGrow: 1 }}
-        ></Typography>
+          sx={{
+            flexGrow: 1,
+            fontSize: "0.875rem",
+            color: "primary.main",
+            textTransform: "uppercase",
+          }}
+        >
+          <span style={{ color: "#93693E" }}>VMS</span> Thotupola Lakeside
+          <div className={styles.clock}>
+            {today} &nbsp; <Clock />
+          </div>
+        </Typography>
 
         <Stack
           direction="row"
           justifyContent="flex-end"
           alignItems="center"
-          spacing={1}
+          alignContent="center"
+          spacing={2}
         >
-          <IconButton color="inherit">
+          <IconButton color="inherit" size="small">
             <Badge badgeContent={23} color="secondary">
               <NotificationsNoneTwoToneIcon />
             </Badge>
           </IconButton>
 
-          <IconButton color="inherit">
+          <IconButton color="inherit" size="small">
             <Badge badgeContent={2} color="secondary">
               <EmailTwoToneIcon />
             </Badge>

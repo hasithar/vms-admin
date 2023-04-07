@@ -56,10 +56,15 @@ const Settings = () => {
           variant="dot"
           sx={{ position: "relative", top: "-2px", paddingLeft: "5px" }}
         >
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+          <IconButton
+            onClick={handleOpenUserMenu}
+            sx={{ p: 0, top: "-0.3rem" }}
+            size="small"
+          >
             <Avatar
               alt="User prfile pic"
               src={profileUrl ? profileUrl : defaultProfile}
+              sx={{ width: 36, height: 36 }}
             />
           </IconButton>
         </StyledBadge>

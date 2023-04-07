@@ -10,7 +10,7 @@ const Search = () => {
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Search…"
+        placeholder="Search in VMS"
         inputProps={{ "aria-label": "search" }}
       />
     </SearchWrapper>

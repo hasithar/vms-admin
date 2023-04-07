@@ -33,7 +33,7 @@ const Sidebar = (props) => {
         <Stack
           direction="row"
           justifyContent="space-between"
-          sx={{ width: "100%", py: 2 }}
+          sx={{ width: "100%", py: 1 }}
         >
           <Box sx={{ width: "100%", p: 1 }}>
             <img src={logo} alt="logo" />

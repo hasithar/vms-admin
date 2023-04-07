@@ -45,7 +45,7 @@ const PageLayout = ({ children }) => {
             flexGrow: 1,
             minHeight: "100vh",
             overflow: "auto",
-            ...(open ? { pl: 5 } : { pl: 0 }),
+            ...(open ? { pl: 0 } : { pl: 0 }),
           }}
         >
           <Container maxWidth={false} sx={{ mt: 15, mb: 4 }}>
