@@ -1,7 +1,17 @@
 import CustomerTable from "./components/CustomerTable.component";
 
-import { fetchAll } from "./services/customer.service";
+import { fetchAll, deleteSingle } from "./services/customer.service";
 
-import customerReducer, { getAllCustomers } from "./slices/customer.slice";
+import customerReducer, {
+  getAllCustomers,
+  deleteCustomer,
+} from "./slices/customer.slice";
 
-export { CustomerTable, fetchAll, customerReducer, getAllCustomers };
+export {
+  CustomerTable,
+  fetchAll,
+  deleteSingle,
+  customerReducer,
+  getAllCustomers,
+  deleteCustomer,
+};

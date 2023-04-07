@@ -1,7 +1,17 @@
 // components
 import { CustomerTable } from "./Customer";
 
-// reducers
-import { fetchAll, customerReducer, getAllCustomers } from "./Customer";
+// services
+import { fetchAll, deleteSingle } from "./Customer";
 
-export { CustomerTable, fetchAll, customerReducer, getAllCustomers };
+// reducers
+import { customerReducer, getAllCustomers, deleteCustomer } from "./Customer";
+
+export {
+  CustomerTable,
+  fetchAll,
+  deleteSingle,
+  customerReducer,
+  getAllCustomers,
+  deleteCustomer,
+};

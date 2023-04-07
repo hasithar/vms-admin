@@ -4,10 +4,17 @@ import { Box, Stack, CircularProgress } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import RowActions from "./RowActions/RowActions.component";
 import ViewRecordDialog from "./ViewRecordDialog/ViewRecordDialog.component";
+import DeleteDialog from "./DeleteDialog/DeleteDialog.component";
 
 const UIDatatable = (props) => {
-  const { loading, rows, columns, columnVisibilityModel, recordIdentifier } =
-    props;
+  const {
+    loading,
+    rows,
+    columns,
+    columnVisibilityModel,
+    recordIdentifier,
+    paramIdentifier,
+  } = props;
 
   const navigate = useNavigate();
 
@@ -61,14 +68,17 @@ const UIDatatable = (props) => {
             {
               label: "View",
               action: actionView,
+              active: true,
             },
             {
               label: "Edit",
               action: actionEdit,
+              active: true,
             },
             {
               label: "Delete",
               action: actionDelete,
+              active: false,
             },
           ];
 
@@ -80,7 +90,7 @@ const UIDatatable = (props) => {
     };
 
     updateColumns();
-  }, [columns]);
+  }, [columns, navigate]);
 
   return (
     <Box>
@@ -105,11 +115,7 @@ const UIDatatable = (props) => {
             initialState={{
               pagination: { paginationModel: { pageSize: 10 } },
             }}
-
-            // getRowId={(row) => row?._id}
-            // rowsPerPageOptions={[5]}
-            // pagination
-            // rowCount={rows?.length}
+            pageSizeOptions={[10, 25, 50, 100]}
           />
         )
       )}
@@ -120,53 +126,17 @@ const UIDatatable = (props) => {
         handleViewDialog={handleViewDialog}
         columns={columns}
         recordIdentifier={recordIdentifier}
-        // recordType={recordType}
       />
 
-      {/* <DeleteDialog
+      <DeleteDialog
         record={currentRecord}
         deleteDialogOpen={deleteDialogOpen}
         handleDeleteDialog={handleDeleteDialog}
         recordIdentifier={recordIdentifier}
-        columns={columns}
-        actionIdentifier={actionIdentifier}
-      /> */}
+        paramIdentifier={paramIdentifier}
+      />
     </Box>
   );
 };
 
 export default UIDatatable;
-
-// import React, { useEffect, useState } from "react";
-// import { useNavigate } from "react-router";
-// import { Box, CircularProgress, Stack } from "@mui/material";
-
-// import ViewRecordDialog from "./ViewRecordDialog/ViewRecordDialog.component";
-// import DeleteDialog from "./DeleteDialog/DeleteDialog.component";
-// import RowActions from "./RowActions/RowActions.component";
-
-// const DataTable = (props) => {
-//   const {
-//     loading,
-//     rows,
-//     columns,
-//     recordIdentifier,
-//     actionIdentifier,
-//     recordType,
-//     isEnabledView = true,
-//     isEnabledEdit = false,
-//     isEnabledDelete = true,
-//     paginationData = {},
-//     handlePageChange,
-//   } = props;
-
-//
-
-//   const [page, setPage] = React.useState(0);
-
-//   return (
-
-//   );
-// };
-
-// export default DataTable;

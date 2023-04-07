@@ -2,8 +2,9 @@ import { clearAlert } from "@/features/Common";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "@mui/material";
-import { getAllCustomers } from "@/features/Admin";
+import { getAllCustomers, deleteCustomer } from "@/features/Admin";
 import UIDatatable from "@/components/UI/UIAlert/UIDatatable/UIDatatable.component";
+import UIAlert from "@/components/UI/UIAlert/UIAlert.component";
 
 const CustomerTable = () => {
   const dispatch = useDispatch();
@@ -12,8 +13,17 @@ const CustomerTable = () => {
   const customers = useSelector((state) => state.customer);
 
   const [dataFotmatted, setDataFormatted] = useState();
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const recordIdentifier = "name";
+
+  const paramIdentifier = {
+    name: "Customer",
+    actions: {
+      delete: deleteCustomer,
+    },
+    state: customers,
+  };
 
   const columns = [
     {
@@ -122,6 +132,12 @@ const CustomerTable = () => {
 
   return (
     <Box>
+      <UIAlert
+        alert={alert}
+        showErrorMessage={showErrorMessage}
+        setShowErrorMessage={setShowErrorMessage}
+      />
+
       {customers && (
         <UIDatatable
           loading={customers?.loading}
@@ -129,6 +145,7 @@ const CustomerTable = () => {
           columns={columns}
           columnVisibilityModel={columnVisibilityModel}
           recordIdentifier={recordIdentifier}
+          paramIdentifier={paramIdentifier}
           //           actionIdentifier="organizationActions"
         />
       )}

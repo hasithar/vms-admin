@@ -18,7 +18,23 @@ const fetchAll = async () => {
   }
 };
 
-export { fetchAll };
+const deleteSingle = async (id) => {
+  const requestOptions = {
+    headers: authHeader(),
+  };
+
+  try {
+    const response = await axios.delete(
+      `${apiConstants.API_URL}/customers/${id}`,
+      requestOptions
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { fetchAll, deleteSingle };
 
 // import { apiConstants } from "../constants";
 // import { authHeader } from "../helpers";
@@ -185,19 +201,6 @@ export { fetchAll };
 //       delivery_country_id: delivery_country_id,
 //       gst_enabled,
 //     }),
-//   };
-
-//   return fetch(
-//     `${apiConstants.API_URL}/organizations/${id}`,
-//     requestOptions
-//   ).then(handleResponse);
-// }
-
-// // delete parameter
-// function deleteParameter(id) {
-//   const requestOptions = {
-//     method: "DELETE",
-//     headers: authHeader(),
 //   };
 
 //   return fetch(
