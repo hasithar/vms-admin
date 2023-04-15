@@ -39,6 +39,11 @@ import CustomerAdd from "./pages/Admin/CustomerManagement/CustomerAdd/CustomerAd
 import CustomerEdit from "./pages/Admin/CustomerManagement/CustomerEdit/CustomerEdit";
 import CustomerList from "./pages/Admin/CustomerManagement/CustomerList/CustomerList";
 
+// Users
+import UserAdd from "./pages/Admin/UserManagement/UserAdd/UserAdd";
+import UserEdit from "./pages/Admin/UserManagement/UserEdit/UserEdit";
+import UserList from "./pages/Admin/UserManagement/UserList/UserList";
+
 // Reservations
 import Reservations from "./pages/Admin/Reservations/Reservations";
 
@@ -97,6 +102,12 @@ const App = (props) => {
                 path="/admin/customers/:id/edit"
                 element={<CustomerEdit />}
               />
+            </Route>
+
+            <Route path="/admin/users">
+              <Route index element={<UserList />} />
+              <Route path="/admin/users/add" element={<UserAdd />} />
+              <Route path="/admin/users/:id/edit" element={<UserEdit />} />
             </Route>
 
             <Route path="/admin/reservations" element={<Reservations />} />

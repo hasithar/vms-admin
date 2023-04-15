@@ -72,6 +72,8 @@ const Navigation = () => {
 
       <ListItemLink to="/admin/customers" primary="Customers" />
 
+      <ListItemLink to="/admin/users" primary="Users" />
+
       <ListItemLink to="/admin/inventory" primary="Inventory" />
 
       <ListItemLink to="/admin/invoices" primary="Invoices" />

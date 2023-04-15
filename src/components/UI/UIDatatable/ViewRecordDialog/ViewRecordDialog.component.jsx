@@ -80,19 +80,31 @@ const ViewRecordDialog = (props) => {
                       <Case condition={r[0]?.headerName === "Status"}>
                         <ListItemText
                           primary={r[0]?.headerName}
-                          secondary={value === 1 ? "Active" : "Deactive"}
+                          secondary={
+                            <Typography color="secondary" variant="body2">
+                              {<>{value === 1 ? "Active" : "Deactive"}</>}
+                            </Typography>
+                          }
                         />
                       </Case>
                       <Case condition={r[0]?.type === "boolean"}>
                         <ListItemText
                           primary={r[0]?.headerName}
-                          secondary={value === 1 ? "Yes" : "No"}
+                          secondary={
+                            <Typography color="secondary" variant="body2">
+                              {<>{value === true ? "Yes" : "No"}</>}
+                            </Typography>
+                          }
                         />
                       </Case>
                       <Default>
                         <ListItemText
                           primary={r[0]?.headerName}
-                          secondary={value ? value : "-"}
+                          secondary={
+                            <Typography color="secondary" variant="body2">
+                              {<>{value ? value : "-"}</>}
+                            </Typography>
+                          }
                         />
                       </Default>
                     </Switch>

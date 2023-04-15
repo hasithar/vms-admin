@@ -1,14 +1,6 @@
 // components
 import { CustomerTable, CustomerForm } from "./Customer";
-
-// services
-// import {
-//   getAllParameters,
-//   getSingleParameter,
-//   addParameter,
-//   updateParameter,
-//   deleteParameter,
-// } from "./Customer";
+import { UserTable, UserForm } from "./User";
 
 // reducers
 import {
@@ -20,18 +12,32 @@ import {
   deleteCustomer,
 } from "./Customer";
 
+import {
+  userReducer,
+  getAllUsers,
+  getUser,
+  addUser,
+  updateUser,
+  deleteUser,
+} from "./User";
+
 export {
+  // customer
   CustomerTable,
   CustomerForm,
-  // getAllParameters,
-  // getSingleParameter,
-  // addParameter,
-  // updateParameter,
-  // deleteParameter,
   customerReducer,
   getAllCustomers,
   getCustomer,
   addCustomer,
   updateCustomer,
   deleteCustomer,
+  // user
+  UserTable,
+  UserForm,
+  userReducer,
+  getAllUsers,
+  getUser,
+  addUser,
+  updateUser,
+  deleteUser,
 };
