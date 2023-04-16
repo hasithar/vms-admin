@@ -98,13 +98,15 @@ export const addCustomer = (data) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
     dispatch(clear());
-    const response = await addParameter(data);
-    dispatch(addSingle(response?.data));
+    const opsResponse = await addParameter(data);
+    // dispatch(addSingle(opsResponse?.data));
+    const dataResponse = await getAllParameters();
+    dispatch(getAll(dataResponse));
     dispatch(
       showAlert({
-        title: response?.message,
-        description: response?.description,
-        severity: response?.severity,
+        title: opsResponse?.message,
+        description: opsResponse?.description,
+        severity: opsResponse?.severity,
       })
     );
     dispatch(setLoading(false));

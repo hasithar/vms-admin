@@ -97,6 +97,22 @@ const ViewRecordDialog = (props) => {
                           }
                         />
                       </Case>
+                      <Case condition={r[0]?.type === "object"}>
+                        <ListItemText
+                          primary={r[0]?.headerName}
+                          secondary={
+                            <Typography color="secondary" variant="body2">
+                              {
+                                <>
+                                  {value && value[r[0].detailKey]
+                                    ? value[r[0].detailKey]
+                                    : "-"}
+                                </>
+                              }
+                            </Typography>
+                          }
+                        />
+                      </Case>
                       <Default>
                         <ListItemText
                           primary={r[0]?.headerName}

@@ -79,11 +79,15 @@ const CustomerTable = () => {
       field: "referredBy",
       headerName: "Referred By",
       showDetail: true,
+      type: "object",
+      detailKey: "name",
     },
     {
       field: "assignedTo",
       headerName: "Assigned To",
       showDetail: true,
+      type: "object",
+      detailKey: "name",
     },
     {
       field: "status",

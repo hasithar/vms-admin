@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Divider,
@@ -11,6 +11,7 @@ import {
   Select,
   MenuItem,
   FormHelperText,
+  Autocomplete,
 } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -22,10 +23,17 @@ import { addCustomer, updateCustomer } from "../slices/customer.slice";
 
 const CustomerForm = (props) => {
   const { params, handleSuccessDialog, handleErrorAlert } = props;
+  const { states } = params;
 
   const dispatch = useDispatch();
   const customerState = useSelector((state) => state.customer);
   const alertState = useSelector((state) => state.alert);
+
+  const [autocompleteLoading, setAutocompleteLoading] = useState();
+  const [autocompleteOptions, setAutocompleteOptions] = useState({
+    referredBy: [],
+    assignedTo: [],
+  });
 
   const formikRef = React.createRef();
   const debug = false;
@@ -34,18 +42,26 @@ const CustomerForm = (props) => {
     title: Yup.string().required("Title is Required"),
     firstname: Yup.string()
       .required("Firstname is required")
-      .matches(/^[A-Za-z]+$/, "First Name must only contain letters"),
+      .matches(/^[A-Za-z\s]+$/, "First Name must only contain letters"),
     lastname: Yup.string()
       .required("Lastname is required")
-      .matches(/^[A-Za-z]+$/, "Last Name must only contain letters"),
+      .matches(/^[A-Za-z\s]+$/, "Last Name must only contain letters"),
     phone: Yup.string()
       .required("Phone number is required")
       .matches(/^[0-9-+]{10,}$/, "Please enter a valid phone number"),
     email: Yup.string().email().nullable(true),
     address: Yup.string().nullable(true),
     city: Yup.string().nullable(true),
-    referredBy: Yup.string().nullable(true),
-    assignedTo: Yup.string().nullable(true),
+    referredBy: Yup.object().shape({
+      id: Yup.string(),
+      name: Yup.string(),
+      refertype: Yup.string(),
+    }),
+    assignedTo: Yup.object().shape({
+      id: Yup.string(),
+      name: Yup.string(),
+      role: Yup.string(),
+    }),
     status: Yup.number().required("Status is required"),
     comments: Yup.string().max(600).nullable(true),
   });
@@ -58,8 +74,8 @@ const CustomerForm = (props) => {
     email: "",
     address: "",
     city: "",
-    referredBy: "",
-    assignedTo: "",
+    referredBy: undefined,
+    assignedTo: undefined,
     status: 1,
     comments: "",
   };
@@ -80,6 +96,56 @@ const CustomerForm = (props) => {
       dispatch(updateCustomer(params?.data?._id, values));
     }
   };
+
+  const formatAutoCompleteData = (customers, users) => {
+    setAutocompleteLoading(true);
+
+    let customersFormatted,
+      usersFormatted,
+      referredByOptions = [];
+
+    customersFormatted = customers?.data?.map((option) => {
+      const firstLetter = option.firstname[0].toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        group: "Customers",
+        ...option,
+      };
+    });
+
+    usersFormatted = users?.data?.map((option) => {
+      const firstLetter = option.firstname[0].toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        group: "Staff",
+        ...option,
+      };
+    });
+
+    if (customersFormatted && usersFormatted) {
+      referredByOptions = [...customersFormatted, ...usersFormatted].sort(
+        (a, b) => {
+          if (a.group.toLowerCase() === b.group.toLowerCase()) {
+            return a.firstLetter.toLowerCase() > b.firstLetter.toLowerCase()
+              ? 1
+              : -1;
+          }
+          return a.group.toLowerCase() > b.group.toLowerCase() ? 1 : -1;
+        }
+      );
+    }
+
+    setAutocompleteOptions({
+      referredBy: referredByOptions,
+      assignedTo: usersFormatted,
+    });
+
+    setAutocompleteLoading(false);
+  };
+
+  useEffect(() => {
+    formatAutoCompleteData(states?.customers, states?.users);
+  }, [states]);
 
   useEffect(() => {
     const handleSuccess = () => {
@@ -298,12 +364,101 @@ const CustomerForm = (props) => {
                   size="small"
                 />
               </Grid>
-              {/* <Grid item xs={12} md={6}>
-                referred by
+              <Grid item xs={12} md={6}>
+                <Autocomplete
+                  id="referredBy"
+                  name="referredBy"
+                  options={autocompleteOptions.referredBy}
+                  groupBy={(option) => option.group}
+                  getOptionLabel={(option) =>
+                    `${option.firstname} ${option.lastname}`
+                  }
+                  onChange={(event, value) => {
+                    setFieldValue("referredBy", {
+                      id: value._id,
+                      name: `${value.firstname} ${value.lastname}`,
+                      refertype: value.group === "Staff" ? "user" : "customer",
+                    });
+                  }}
+                  fullWidth
+                  loading={autocompleteLoading}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      margin="normal"
+                      label="Referred By"
+                      variant="standard"
+                      size="small"
+                      className={styles.textField}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      // value={values.referredBy}
+                      helperText={
+                        touched.referredBy && errors.referredBy
+                          ? errors.referredBy
+                          : ""
+                      }
+                      error={Boolean(touched.referredBy && errors.referredBy)}
+                    />
+                  )}
+                />
+
+                {/* <Autocomplete      
+                  disableClearable={true}
+                  onChange={(event, value) => {
+                    setFieldValue(measurementId, value.id);
+                  }}
+                  classes={{
+                    root: styles.autocompleteRoot,
+                    inputRoot: styles.autocompleteInputRoot,
+                    option: [patternStyles.autoCompleteOption],
+                    groupLabel: styles.autoCompleteGroupLabel,
+                  }}
+       
+                  )}
+                /> */}
               </Grid>
               <Grid item xs={12} md={6}>
-                assigned to
-              </Grid> */}
+                <Autocomplete
+                  id="assignedTo"
+                  name="assignedTo"
+                  options={autocompleteOptions.assignedTo.sort(
+                    (a, b) => -b.firstLetter.localeCompare(a.firstLetter)
+                  )}
+                  getOptionLabel={(option) =>
+                    `${option.firstname} ${option.lastname}`
+                  }
+                  onChange={(event, value) => {
+                    setFieldValue("assignedTo", {
+                      id: value._id,
+                      name: `${value.firstname} ${value.lastname}`,
+                      role: value.role,
+                    });
+                  }}
+                  fullWidth
+                  loading={autocompleteLoading}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      fullWidth
+                      margin="normal"
+                      label="Assigned To"
+                      variant="standard"
+                      size="small"
+                      className={styles.textField}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      helperText={
+                        touched.assignedTo && errors.assignedTo
+                          ? errors.assignedTo
+                          : ""
+                      }
+                      error={Boolean(touched.assignedTo && errors.assignedTo)}
+                    />
+                  )}
+                />
+              </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
