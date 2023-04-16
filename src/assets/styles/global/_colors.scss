@@ -1,4 +1,14 @@
-$primary: #6A276A;
-$secondary: #93693E;
+$primary: #6a276a;
+$secondary: #93693e;
+
+$primary--light--10: lighten($primary, 10%);
+$primary--light--20: lighten($primary, 20%);
+$primary--light--30: lighten($primary, 30%);
+$primary--light--40: lighten($primary, 40%);
+$primary--light--50: lighten($primary, 50%);
+$primary--light--60: lighten($primary, 60%);
+$primary--light--70: lighten($primary, 70%);
+$primary--light--80: lighten($primary, 80%);
+$primary--light--100: lighten($primary, 90%);
 
 $secondary--light: lighten($secondary, 30%);

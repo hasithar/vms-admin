@@ -80,10 +80,7 @@ const Navigation = () => {
 
       <ListItemLink to="/admin/suppliers" primary="Suppliers" />
 
-      <ListItemLink
-        to="/admin/parameter-management"
-        primary="Parameter Management"
-      />
+      <ListItemLink to="/admin/parameters" primary="Parameter Management" />
 
       <Divider light sx={{ borderColor: "#fff", opacity: 0.1 }} />
 

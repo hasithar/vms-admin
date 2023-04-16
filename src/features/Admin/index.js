@@ -1,6 +1,7 @@
 // components
 import { CustomerTable, CustomerForm } from "./Customer";
 import { UserTable, UserForm } from "./User";
+import { ParameterCard } from "./Parameter";
 
 // reducers
 import {
@@ -40,4 +41,6 @@ export {
   addUser,
   updateUser,
   deleteUser,
+  // parameter
+  ParameterCard,
 };

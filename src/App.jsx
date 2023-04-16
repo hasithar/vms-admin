@@ -79,17 +79,17 @@ const App = (props) => {
           <Route path="/admin" element={<ProtectedAdminRoute />}>
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
-            <Route path="/admin/parameter-management">
+            <Route path="/admin/parameters">
               <Route index element={<ParameterManagement />} />
 
               <Route path=":parameter">
                 <Route index element={<ParameterList />} />
                 <Route
-                  path="/admin/parameter-management/:parameter/add"
+                  path="/admin/parameters/:parameter/add"
                   element={<ParameterAdd />}
                 />
                 <Route
-                  path="/admin/parameter-management/:parameter/:id/edit"
+                  path="/admin/parameters/:parameter/:id/edit"
                   element={<ParameterEdit />}
                 />
               </Route>
