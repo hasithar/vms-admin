@@ -31,9 +31,12 @@ import { addUser, updateUser } from "../slices/user.slice";
 import styles from "./../styles/UserForm.module.scss";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
+import { genderOptions, userRoleOptions, userTypes } from "@/constants";
+
 const UserForm = (props) => {
   const { params, handleSuccessDialog, handleErrorAlert } = props;
   const { mode } = params;
+  const { states } = params;
 
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.user);
@@ -46,6 +49,10 @@ const UserForm = (props) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loginStatusToggle, setLoginStatusToggle] = useState(false);
   const [loginFieldValidation, setLoginFieldValidation] = useState(false);
+  const [autocompleteLoading, setAutocompleteLoading] = useState();
+  const [autocompleteOptions, setAutocompleteOptions] = useState({
+    managedBy: [],
+  });
 
   const commonSchema = Yup.object({
     firstname: Yup.string()
@@ -122,18 +129,6 @@ const UserForm = (props) => {
     confirmPassword: "",
   };
 
-  const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-  ];
-
-  const typeOptions = [
-    { value: "internal", label: "Internal" },
-    { value: "external", label: "External" },
-    { value: "headoffice", label: "Head Office" },
-    { value: "temporary", label: "Temporary" },
-  ];
-
   const handleSubmit = (values) => {
     if (!values.username) {
       values.username = undefined;
@@ -175,9 +170,39 @@ const UserForm = (props) => {
   //   handleLoginFieldValidation();
   // }, [loginStatusToggle, mode]);
 
+  const formatAutoCompleteData = (users) => {
+    setAutocompleteLoading(true);
+
+    let usersFormatted,
+      managedByOptions = [];
+
+    usersFormatted = users?.allData?.map((option) => {
+      const firstLetter = option.firstname[0].toUpperCase();
+      return {
+        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+        ...option,
+      };
+    });
+
+    if (usersFormatted) {
+      managedByOptions = usersFormatted.filter(
+        (user) => user.role === ("manager" || "Manager")
+      );
+    }
+
+    setAutocompleteOptions({
+      managedBy: managedByOptions,
+    });
+    setAutocompleteLoading(false);
+  };
+
+  useEffect(() => {
+    formatAutoCompleteData(states?.users);
+  }, [states]);
+
   useEffect(() => {
     const handleSuccess = () => {
-      if (userState?.data && alertState.severity === "success") {
+      if (userState?.currentData && alertState.severity === "success") {
         const message = {
           title: alertState?.title,
           description: alertState?.description,
@@ -204,10 +229,6 @@ const UserForm = (props) => {
   useEffect(() => {
     const prefillData = () => {
       if (params?.mode === "edit" && params?.data) {
-        console.log(
-          "🚀 ~ file: UserForm.component.jsx:169 ~ prefillData ~ params?.data:",
-          params?.data
-        );
         const fields = [
           "title",
           "firstname",
@@ -416,7 +437,7 @@ const UserForm = (props) => {
                     className={styles.textField}
                     sx={{ height: 40 }}
                   >
-                    {typeOptions.map((option) => (
+                    {userTypes.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -436,7 +457,7 @@ const UserForm = (props) => {
                   sx={{ height: 40 }}
                 >
                   <InputLabel sx={{ ml: -1.75, mt: values?.role ? 1 : 0 }}>
-                    User Role ******* ROLE OPTIONS *******
+                    User Role
                   </InputLabel>
                   <Select
                     fullWidth
@@ -450,12 +471,11 @@ const UserForm = (props) => {
                     className={styles.textField}
                     sx={{ height: 40 }}
                   >
-                    {/* {roleOptions.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                    {userRoleOptions.map((option) => (
+                      <MenuItem key={option.slug} value={option.group}>
+                        {option.name}
                       </MenuItem>
-                    ))} */}
-                    <MenuItem value="aaa">AAA</MenuItem>
+                    ))}
                   </Select>
                   {touched.role && Boolean(errors.role) && (
                     <FormHelperText sx={{ ml: 0 }}>
@@ -471,7 +491,7 @@ const UserForm = (props) => {
                   sx={{ height: 40 }}
                 >
                   <InputLabel sx={{ ml: -1.75, mt: values?.managedBy ? 1 : 0 }}>
-                    Reported To ******* OPTIONS *******
+                    Reported To
                   </InputLabel>
                   <Select
                     fullWidth
@@ -485,12 +505,14 @@ const UserForm = (props) => {
                     className={styles.textField}
                     sx={{ height: 40 }}
                   >
-                    {/* {managedByOptions.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                    {autocompleteOptions?.managedBy.map((option) => (
+                      <MenuItem
+                        key={option._id}
+                        value={`${option.firstname} ${option.lastname}`}
+                      >
+                        {`${option.firstname} ${option.lastname}`}
                       </MenuItem>
-                    ))} */}
-                    <MenuItem value="aaa">AAA</MenuItem>
+                    ))}
                   </Select>
                   {touched.managedBy && Boolean(errors.managedBy) && (
                     <FormHelperText sx={{ ml: 0 }}>

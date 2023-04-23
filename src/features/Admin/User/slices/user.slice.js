@@ -9,7 +9,8 @@ import {
 import { clearAlert, showAlert } from "@/features/Common";
 
 const initialState = {
-  data: [],
+  allData: [],
+  currentData: [],
   loading: false,
 };
 
@@ -18,24 +19,25 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     getAll: (state, action) => {
-      state.data = action.payload;
+      state.allData = action.payload;
       state.loading = false;
     },
     getSingle: (state, action) => {
-      state.data = action.payload;
+      state.currentData = action.payload;
       state.loading = false;
     },
     addSingle: (state, action) => {
-      state.data = action.payload;
+      state.currentData = action.payload;
       state.loading = false;
     },
     updateSingle: (state, action) => {
-      state.data = action.payload;
+      state.currentData = action.payload;
       state.loading = false;
     },
     clear: (state) => {
-      state.data = null;
-      state.setLoading = false;
+      state.allData = null;
+      state.currentData = null;
+      state.loading = false;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -74,7 +76,6 @@ export const getUser = (id) => async (dispatch) => {
 
   try {
     dispatch(setLoading(true));
-    dispatch(clear());
     const response = await getSingleParameter(id);
     dispatch(getSingle(response));
     dispatch(setLoading(false));
@@ -97,14 +98,15 @@ export const addUser = (data) => async (dispatch) => {
 
   try {
     dispatch(setLoading(true));
-    dispatch(clear());
-    const response = await addParameter(data);
-    dispatch(addSingle(response?.data));
+    const opsResponse = await addParameter(data);
+    dispatch(addSingle(opsResponse?.data));
+    const dataResponse = await getAllParameters();
+    dispatch(getAll(dataResponse));
     dispatch(
       showAlert({
-        title: response?.message,
-        description: response?.description,
-        severity: response?.severity,
+        title: opsResponse?.message,
+        description: opsResponse?.description,
+        severity: opsResponse?.severity,
       })
     );
     dispatch(setLoading(false));
@@ -127,7 +129,6 @@ export const updateUser = (id, data) => async (dispatch) => {
 
   try {
     dispatch(setLoading(true));
-    dispatch(clear());
     const response = await updateParameter(id, data);
     dispatch(updateSingle(response?.data));
     dispatch(

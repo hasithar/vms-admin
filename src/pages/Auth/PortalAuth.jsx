@@ -26,32 +26,26 @@ const Copyright = (props) => {
 const PortalAuth = () => {
   return (
     <Container maxWidth={false} className={styles.wrapper}>
-      <Container maxWidth={"sm"} className={styles.contentWrapper}>
-        <img src={logo} alt="logo" className={styles.logoMobile} />
-        <div className={styles.authContentWrapper}>
+      <Grid container className={styles.container}>
+        <Grid item md={8}>
+          <img src={cardImage} alt="" className={styles.cardImage} />
+        </Grid>
+
+        <Grid item md={4} className={styles.contentWrap}>
+          <img src={logo} alt="logo" className={styles.logo} />
+
           <Card className={styles.card}>
             <CardContent className={styles.cardContent}>
               <Grid container>
-                <Grid
-                  item
-                  md={5}
-                  sx={{
-                    display: { xs: "none", md: "block" },
-                    position: "relative",
-                  }}
-                >
-                  <img src={logo} alt="logo" className={styles.logo} />
-                  <img src={cardImage} alt="" className={styles.cardImage} />
-                </Grid>
-                <Grid item md={7} className={styles.outletWrapper}>
+                <Grid item md={12} className={styles.outletWrapper}>
                   <Outlet />
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
-        </div>
-        <Copyright />
-      </Container>
+          {/* <Copyright /> */}
+        </Grid>
+      </Grid>
     </Container>
   );
 };

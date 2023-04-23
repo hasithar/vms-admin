@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Page from "@/components/layout/pageLayout/Page/Page.component";
 import BoxedContent from "@/components/layout/pageLayout/BoxedContent/BoxedContent.component";
 import UIForm from "@/components/UI/UIForm/UIForm.component";
 import { UserForm } from "@/features/Admin";
+import { getAllUsers } from "@/features/Admin";
 
 const UserAdd = () => {
+  const dispatch = useDispatch();
+
+  const userState = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const getUsers = () => {
+      dispatch(getAllUsers());
+    };
+
+    getUsers();
+  }, [dispatch]);
+
   const pageprops = {
     title: "Register New User",
     breadcrumbs: [
@@ -41,6 +55,7 @@ const UserAdd = () => {
       next: "/admin/users",
     },
     mode: "add",
+    states: { users: userState },
   };
 
   return (

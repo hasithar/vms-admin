@@ -73,6 +73,18 @@ import Inventory from "./pages/Admin/Inventory/Inventory";
 
 // Dashboard
 import PortalDashboard from "./pages/Portal/Dashboard/Dashboard";
+// Package
+import PortalPackage from "./pages/Portal/Package/Package";
+// Menu
+import PortalMenu from "./pages/Portal/Menu/Menu";
+// Function plan
+import PortalFunctionPlan from "./pages/Portal/FunctionPlan/FunctionPlan";
+// Floor plan
+import PortalFloorPlan from "./pages/Portal/FloorPlan/FloorPlan";
+// Decoration
+import PortalDecorations from "./pages/Portal/Decorations/Decorations";
+// Guest List
+import PortalGuestList from "./pages/Portal/GuestList/GuestList";
 
 const App = (props) => {
   // const dispatch = useDispatch();
@@ -164,130 +176,23 @@ const App = (props) => {
           {/* Portal */}
           <Route path="/portal" element={<ProtectedPortalRoute />}>
             <Route path="/portal/dashboard" element={<PortalDashboard />} />
+            <Route path="/portal/package" element={<PortalPackage />} />
+            <Route path="/portal/menu" element={<PortalMenu />} />
+            <Route
+              path="/portal/function-plan"
+              element={<PortalFunctionPlan />}
+            />
+            <Route path="/portal/floor-plan" element={<PortalFloorPlan />} />
+            <Route path="/portal/decoration" element={<PortalDecorations />} />
+            <Route path="/portal/guest-list" element={<PortalGuestList />} />
           </Route>
 
           {/* Not found */}
           {/* <Route path="*" element={<NotFound />} /> */}
 
-          {/* customer login
-            <Route path="/login" element={<Auth />}>
-              <Route index element={<CustomerLogin />} />
-            </Route>
-
-            {/* Customer 
-            <Route path="/" element={<ProtectedCustomerRoute />}>
-              <Route path="/dashboard" element={<CustomerDashboard />} />
-
-              <Route path="/store">
-                <Route index element={<CustomerStore />} />
-
-                <Route path=":itemId" element={<CustomerStoreItem />} />
-                <Route path="/store/cart">
-                  <Route index element={<CustomerStoreCart />} />
-                  <Route
-                    path="/store/cart/success"
-                    element={<CustomerStoreCheckoutSuccess />}
-                  />
-                </Route>
-              </Route>
-            </Route>
-
-            {/* Admin 
-            <Route path="/admin" element={<ProtectedAdminRoute />}>
-              
-              <Route path="/admin/customer-management/roles">
-                  <Route index element={<RoleList />} />
-                  <Route
-                    path="/admin/customer-management/roles/add"
-                    element={<RoleAdd />}
-                  />
-                  <Route
-                    path="/admin/customer-management/roles/:id/edit"
-                    element={<RoleEdit />}
-                  />
-                </Route>
-
-
-              
-
-              <Route path="/admin/profile" element={<ProfileEdit />} />
-
-              <Route path="/admin/organization-management">
-                <Route index element={<OrganizationList />} />
-                <Route
-                  path="/admin/organization-management/add"
-                  element={<OrganizationAdd />}
-                />
-                <Route
-                  path="/admin/organization-management/:id/edit"
-                  element={<OrganizationEdit />}
-                />
-              </Route>
-
-              <Route path="/admin/quotation" element={<QuotationPage />} />
-
-              <Route path="/admin/quotations" element={<QuotationsComponent />} />
-
-              <Route path="/admin/quotation/:id" element={<EditQuotation/>} />
-
-              <Route
-                path="/admin/quotation/:id/:admin"
-                element={<AcceptQuotation />}
-              />
-
-              <Route path="/admin/priceBook" element={<PriceBookContainer />} />
-
-              <Route path="/admin/production-orders" >
-                <Route index element={<ProductionOrder />} />
-                <Route path=":id/:view" element={<ProductionOrderView />} />
-              </Route>
-
-              <Route 
-                path="/admin/production-orders/:proceededProductionOrder" 
-                element={<ProductionOrder />}
-              >
-              </Route>
-
-              <Route path="/admin/invoices">
-                <Route index element={<InvoicesComponent/>} />
-                <Route path=":id" element={<InvoiceContainer />} />
-                <Route path=":id/:view" element={<ViewInvoiceContainer />} />
-              </Route>
-
-              <Route path="/admin/payments" element={<PaymentManagementContainer />} />
-
-              <Route 
-                path="/admin/invoice/:id/:customer"
-                element={<InvoiceContainer />}
-              >
-              </Route>
-
-              <Route
-                path="/admin/sales-orders"
-                element={<SalesOrdersContainer />}
-              />
-              <Route
-                path="/admin/sales-orders/:id/:view"
-                element={<SalesOrderPage />}
-              />
-              <Route
-                path="/admin/sales-orders/:id"
-                element={<SalesOrderPage />}
-              />
-              <Route
-                path="/admin/sales-orders/customer/:id"
-                element={<SalesOrderCustomer />}
-              />
-
-              <Route
-                path="/admin/sales-order/proceed/:id"
-                element={<SalesOrderProceedComponent />}
-              />
-            </Route>
-
-            {/* open routes 
+          {/* open routes 
             <Route path="/quotation/:id/accept" element={<AcceptQuotation />} /> 
-{*/}
+          {*/}
         </Routes>
       </BrowserRouter>
     </Paper>

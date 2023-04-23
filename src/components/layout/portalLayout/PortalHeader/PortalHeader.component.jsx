@@ -57,27 +57,10 @@ const PortalHeader = (props) => {
     >
       <Toolbar
         sx={{
-          pr: "24px", // keep right padding when drawer closed
-          pt: 3.5,
-          pb: 3.25,
+          minHeight: "3.6rem !important",
         }}
         elevation={0}
       >
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          onClick={toggleDrawer}
-          sx={{
-            mr: 1,
-            position: "relative",
-            l: "2px",
-            ...(open && { display: "none" }),
-          }}
-        >
-          <MenuTwoToneIcon />
-        </IconButton>
-
         {/* <Search /> */}
 
         <Typography
@@ -87,15 +70,13 @@ const PortalHeader = (props) => {
           noWrap
           sx={{
             flexGrow: 1,
-            fontSize: "0.875rem",
-            color: "primary.main",
-            textTransform: "uppercase",
+            fontSize: "0.85rem",
+            color: "#232323",
           }}
         >
-          <span style={{ color: "#93693E" }}>VMS</span> Thotupola Lakeside
-          <div className={styles.clock}>
-            {today} &nbsp; <Clock />
-          </div>
+          <span style={{ color: "#93693E" }}>Thotupola Lakeside</span> Wedding
+          Planner
+          <div className={styles.tagline}>Let's plan your Wedding</div>
         </Typography>
 
         <Stack
@@ -105,17 +86,17 @@ const PortalHeader = (props) => {
           alignContent="center"
           spacing={2}
         >
-          <IconButton color="inherit" size="small">
+          {/* <IconButton color="inherit" size="small">
             <Badge badgeContent={23} color="secondary">
               <NotificationsNoneTwoToneIcon />
             </Badge>
-          </IconButton>
+          </IconButton> */}
 
-          <IconButton color="inherit" size="small">
+          {/* <IconButton color="inherit" size="small">
             <Badge badgeContent={2} color="secondary">
               <EmailTwoToneIcon />
             </Badge>
-          </IconButton>
+          </IconButton> */}
 
           <Settings />
         </Stack>
