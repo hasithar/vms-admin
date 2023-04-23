@@ -119,8 +119,8 @@ const CustomerTable = () => {
 
   useEffect(() => {
     const formatData = () => {
-      if (customers?.allData?.length > 0) {
-        const formattedData = customers?.allData.map((customer, i) => {
+      if (customers?.data?.length > 0) {
+        const formattedData = customers?.data.map((customer, i) => {
           const {
             __v,
             createdAt,

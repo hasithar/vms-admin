@@ -1,18 +1,18 @@
 import React from "react";
 import Page from "@/components/layout/pageLayout/Page/Page.component";
 import BoxedContent from "@/components/layout/pageLayout/BoxedContent/BoxedContent.component";
-import { CustomerTable } from "@/features/Admin";
+import { AppointmentCalendar } from "@/features/Admin";
 
-const CustomersList = () => {
+const AppointmentList = () => {
   const pageprops = {
-    title: "Customers",
+    title: "Appointments",
     breadcrumbs: [
       {
-        title: "Customer Management",
-        href: "customers",
+        title: "Appointments",
+        href: "appointments",
       },
       {
-        title: "All Customers",
+        title: "All Appointments",
         href: "",
       },
     ],
@@ -20,7 +20,7 @@ const CustomersList = () => {
       header: {
         search: {
           active: false,
-          label: "Customer",
+          label: "Appointment",
         },
         buttons: {
           active: true,
@@ -28,8 +28,8 @@ const CustomersList = () => {
             {
               type: "add",
               color: "primary",
-              label: "Add New Customer",
-              href: "/admin/customers/add",
+              label: "Add New Appointment",
+              href: "/admin/appointments/add",
             },
           ],
         },
@@ -40,12 +40,12 @@ const CustomersList = () => {
   return (
     <>
       <Page pageprops={pageprops}>
-        <BoxedContent title="" subtitle="" description="" edge>
-          <CustomerTable />
+        <BoxedContent title="" subtitle="" description="">
+          <AppointmentCalendar />
         </BoxedContent>
       </Page>
     </>
   );
 };
 
-export default CustomersList;
+export default AppointmentList;

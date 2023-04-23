@@ -2,6 +2,8 @@
 import { CustomerTable, CustomerForm } from "./Customer";
 import { UserTable, UserForm } from "./User";
 import { ParameterCard } from "./Parameter";
+import { AppointmentCalendar } from "./Appointment";
+import { ReservationCalendar } from "./Reservation";
 
 // reducers
 import {
@@ -43,4 +45,8 @@ export {
   deleteUser,
   // parameter
   ParameterCard,
+  // appointments
+  AppointmentCalendar,
+  // reservations
+  ReservationCalendar,
 };

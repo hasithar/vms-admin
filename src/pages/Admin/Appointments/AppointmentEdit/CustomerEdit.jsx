@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Page from "@/components/layout/pageLayout/Page/Page.component";
 import BoxedContent from "@/components/layout/pageLayout/BoxedContent/BoxedContent.component";
 import UIForm from "@/components/UI/UIForm/UIForm.component";
-import { CustomerForm, getAllCustomers, getAllUsers } from "@/features/Admin";
+import { CustomerForm, getAllCustomers } from "@/features/Admin";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -11,29 +11,15 @@ const CustomerEdit = () => {
   const routerParams = useParams();
 
   const customerState = useSelector((state) => state.customer);
-  const userState = useSelector((state) => state.user);
 
   const [currentParamData, setCurrentParamData] = useState(null);
 
   useEffect(() => {
-    const getCustomers = () => {
-      dispatch(getAllCustomers());
-    };
-
-    const getUsers = () => {
-      dispatch(getAllUsers());
-    };
-
-    getCustomers();
-    getUsers();
-  }, [dispatch]);
-
-  useEffect(() => {
     const getCurrentParam = () => {
-      if (customerState?.allData?.length === 0) {
+      if (customerState?.data?.length === 0) {
         dispatch(getAllCustomers());
       }
-      const cp = customerState?.allData?.filter(
+      const cp = customerState?.data?.filter(
         (item) => item._id === routerParams?.id
       );
 
@@ -82,7 +68,6 @@ const CustomerEdit = () => {
     },
     mode: "edit",
     data: currentParamData,
-    states: { customers: customerState, users: userState },
   };
 
   return (

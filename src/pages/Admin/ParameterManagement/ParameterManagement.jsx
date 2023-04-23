@@ -36,8 +36,8 @@ const ParameterManagement = () => {
   return (
     <>
       <Page pageprops={pageprops}>
-        <BoxedContent title="" subtitle="" description="">
-          <Grid container spacing={2} sx={{ mt: -3 }}>
+        <BoxedContent title="" subtitle="" description="" edge>
+          <Grid container spacing={2}>
             {parameterTypes.map((parameter) => (
               <Grid
                 item
@@ -68,35 +68,3 @@ const ParameterManagement = () => {
 };
 
 export default ParameterManagement;
-
-// import React from "react";
-
-// import Intro from "../../../components/layout/pageLayout/Intro/Intro.component";
-// import Content from "../../../components/layout/pageLayout/Content/Content.component";
-// import BoxedContent from "../../../components/layout/pageLayout/BoxedContent/BoxedContent.component";
-// import ParameterCard from "../../../components/admin/parameterManagement/ParameterCard/ParameterCard.component";
-
-// import { parameterTypes } from "../../../constants";
-
-// const ParamaeterManagementHome = () => {
-//   const breadcrumbs = [<Typography key="3">Parameter Management</Typography>];
-
-//   return (
-//     <>
-//       <Intro
-//         pageTitle={`Parameter Management`}
-//         pageTitleShort="Parameter Management"
-//         breadcrumbs={breadcrumbs}
-//         additionalWidgets=""
-//       />
-
-//       <Content>
-//         <BoxedContent title="Select an option" subtitle="" description="">
-
-//         </BoxedContent>
-//       </Content>
-//     </>
-//   );
-// };
-
-// export default ParamaeterManagementHome;

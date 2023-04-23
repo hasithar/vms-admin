@@ -104,7 +104,7 @@ const CustomerForm = (props) => {
       usersFormatted,
       referredByOptions = [];
 
-    customersFormatted = customers?.allData?.map((option) => {
+    customersFormatted = customers?.data?.map((option) => {
       const firstLetter = option.firstname[0].toUpperCase();
       return {
         firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
@@ -149,7 +149,7 @@ const CustomerForm = (props) => {
 
   useEffect(() => {
     const handleSuccess = () => {
-      if (customerState?.currentData && alertState.severity === "success") {
+      if (customerState?.data && alertState.severity === "success") {
         const message = {
           title: alertState?.title,
           description: alertState?.description,
@@ -160,7 +160,7 @@ const CustomerForm = (props) => {
     };
 
     const handleError = () => {
-      if (!customerState?.currentData && alertState.severity === "error") {
+      if (!customerState?.data && alertState.severity === "error") {
         const message = {
           title: alertState?.title,
           description: alertState?.description,
@@ -382,29 +382,18 @@ const CustomerForm = (props) => {
                   }}
                   fullWidth
                   loading={autocompleteLoading}
-                  renderInput={(autocpmleteparams) => (
+                  renderInput={(params) => (
                     <TextField
-                      {...autocpmleteparams}
+                      {...params}
                       fullWidth
                       margin="normal"
-                      label={
-                        <>
-                          Referred By
-                          {params?.mode === "edit" ? (
-                            <span>
-                              &nbsp;:&nbsp;
-                              <strong>{params?.data?.referredBy?.name}</strong>
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </>
-                      }
+                      label="Referred By"
                       variant="standard"
                       size="small"
                       className={styles.textField}
                       onChange={handleChange}
                       onBlur={handleBlur}
+                      // value={values.referredBy}
                       helperText={
                         touched.referredBy && errors.referredBy
                           ? errors.referredBy
@@ -414,6 +403,21 @@ const CustomerForm = (props) => {
                     />
                   )}
                 />
+
+                {/* <Autocomplete      
+                  disableClearable={true}
+                  onChange={(event, value) => {
+                    setFieldValue(measurementId, value.id);
+                  }}
+                  classes={{
+                    root: styles.autocompleteRoot,
+                    inputRoot: styles.autocompleteInputRoot,
+                    option: [patternStyles.autoCompleteOption],
+                    groupLabel: styles.autoCompleteGroupLabel,
+                  }}
+       
+                  )}
+                /> */}
               </Grid>
               <Grid item xs={12} md={6}>
                 <Autocomplete
@@ -434,24 +438,12 @@ const CustomerForm = (props) => {
                   }}
                   fullWidth
                   loading={autocompleteLoading}
-                  renderInput={(autocompleteparams) => (
+                  renderInput={(params) => (
                     <TextField
-                      {...autocompleteparams}
+                      {...params}
                       fullWidth
                       margin="normal"
-                      label={
-                        <>
-                          Assigned To
-                          {params?.mode === "edit" ? (
-                            <span>
-                              &nbsp;:&nbsp;
-                              <strong>{params?.data?.assignedTo?.name}</strong>
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </>
-                      }
+                      label="Assigned To"
                       variant="standard"
                       size="small"
                       className={styles.textField}

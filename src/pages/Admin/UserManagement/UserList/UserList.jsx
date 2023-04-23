@@ -40,7 +40,7 @@ const UserList = () => {
   return (
     <>
       <Page pageprops={pageprops}>
-        <BoxedContent title="" subtitle="" description="">
+        <BoxedContent title="" subtitle="" description="" edge>
           <UserTable />
         </BoxedContent>
       </Page>

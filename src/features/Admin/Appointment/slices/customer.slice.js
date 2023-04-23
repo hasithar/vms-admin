@@ -9,8 +9,7 @@ import {
 import { clearAlert, showAlert } from "@/features/Common";
 
 const initialState = {
-  allData: [],
-  currentData: [],
+  data: [],
   loading: false,
 };
 
@@ -19,25 +18,24 @@ const customerSlice = createSlice({
   initialState,
   reducers: {
     getAll: (state, action) => {
-      state.allData = action.payload;
+      state.data = action.payload;
       state.loading = false;
     },
     getSingle: (state, action) => {
-      state.currentData = action.payload;
+      state.data = action.payload;
       state.loading = false;
     },
     addSingle: (state, action) => {
-      state.currentData = action.payload;
+      state.data = action.payload;
       state.loading = false;
     },
     updateSingle: (state, action) => {
-      state.currentData = action.payload;
+      state.data = action.payload;
       state.loading = false;
     },
     clear: (state) => {
-      state.allData = null;
-      state.currentData = null;
-      state.loading = false;
+      state.data = null;
+      state.setLoading = false;
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -76,6 +74,7 @@ export const getCustomer = (id) => async (dispatch) => {
 
   try {
     dispatch(setLoading(true));
+    dispatch(clear());
     const response = await getSingleParameter(id);
     dispatch(getSingle(response));
     dispatch(setLoading(false));
@@ -98,8 +97,9 @@ export const addCustomer = (data) => async (dispatch) => {
 
   try {
     dispatch(setLoading(true));
+    dispatch(clear());
     const opsResponse = await addParameter(data);
-    dispatch(addSingle(opsResponse?.data));
+    // dispatch(addSingle(opsResponse?.data));
     const dataResponse = await getAllParameters();
     dispatch(getAll(dataResponse));
     dispatch(
@@ -129,6 +129,7 @@ export const updateCustomer = (id, data) => async (dispatch) => {
 
   try {
     dispatch(setLoading(true));
+    dispatch(clear());
     const response = await updateParameter(id, data);
     dispatch(updateSingle(response?.data));
     dispatch(

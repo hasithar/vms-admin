@@ -19,6 +19,10 @@ import Auth from "./pages/Auth/Auth";
 import Login from "./pages/Auth/Login/Login";
 import ProtectedAdminRoute from "./features/Auth/components/ProtectedAdminRoute/ProtectedAdminRoute";
 
+import PortalAuth from "./pages/Auth/PortalAuth";
+import PortalLogin from "./pages/Auth/Login/PortalLogin";
+import ProtectedPortalRoute from "./features/Auth/components/ProtectedPortalRoute/ProtectedPortalRoute";
+
 /*
  * ----------------------------------------
  * Route group - Admin
@@ -45,10 +49,11 @@ import UserEdit from "./pages/Admin/UserManagement/UserEdit/UserEdit";
 import UserList from "./pages/Admin/UserManagement/UserList/UserList";
 
 // Reservations
-import Reservations from "./pages/Admin/Reservations/Reservations";
+import ReservationList from "./pages/Admin/Reservations/ReservationList/ReservationList";
+import ReservationAdd from "./pages/Admin/Reservations/ReservationAdd/ReservationAdd";
 
 // Appointments
-import Appointments from "./pages/Admin/Appointments/Appointments";
+import AppointmentList from "./pages/Admin/Appointments/AppointmentList/AppointmentList";
 
 // Invoices
 import Invoices from "./pages/Admin/Invoices/Invoices";
@@ -58,6 +63,15 @@ import Suppliers from "./pages/Admin/Suppliers/Suppliers";
 
 // Inventory
 import Inventory from "./pages/Admin/Inventory/Inventory";
+
+/*
+ * ----------------------------------------
+ * Route group - Portal
+ * ----------------------------------------
+ */
+
+// Dashboard
+import PortalDashboard from "./pages/Portal/Dashboard/Dashboard";
 
 const App = (props) => {
   // const dispatch = useDispatch();
@@ -73,6 +87,11 @@ const App = (props) => {
           {/* Auth */}
           <Route path="auth" element={<Auth />}>
             <Route path="login" element={<Login />} />
+          </Route>
+
+          {/* Customer Auth */}
+          <Route path="/" element={<PortalAuth />}>
+            <Route path="login" element={<PortalLogin />} />
           </Route>
 
           {/* Admin */}
@@ -110,15 +129,37 @@ const App = (props) => {
               <Route path="/admin/users/:id/edit" element={<UserEdit />} />
             </Route>
 
-            <Route path="/admin/reservations" element={<Reservations />} />
+            <Route path="/admin/reservations">
+              <Route index element={<ReservationList />} />
+              <Route
+                path="/admin/reservations/add"
+                element={<ReservationAdd />}
+              />
+              {/* <Route
+                path="/admin/reservations/:id/edit"
+                element={<CustomerEdit />}
+              /> */}
+            </Route>
 
-            <Route path="/admin/appointments" element={<Appointments />} />
+            <Route path="/admin/appointments">
+              <Route index element={<AppointmentList />} />
+              {/* <Route path="/admin/appointments/add" element={<CustomerAdd />} />
+              <Route
+                path="/admin/appointments/:id/edit"
+                element={<CustomerEdit />}
+              /> */}
+            </Route>
 
             <Route path="/admin/invoices" element={<Invoices />} />
 
             <Route path="/admin/suppliers" element={<Suppliers />} />
 
             <Route path="/admin/inventory" element={<Inventory />} />
+          </Route>
+
+          {/* Portal */}
+          <Route path="/portal" element={<ProtectedPortalRoute />}>
+            <Route path="/portal/dashboard" element={<PortalDashboard />} />
           </Route>
 
           {/* Not found */}

@@ -1,8 +1,9 @@
 import React from "react";
 import { Paper, Grid, Typography } from "@mui/material";
+import styles from "./BoxedContent.module.scss";
 
 const BoxedContent = (props) => {
-  const { title, subtitle, description, children } = props;
+  const { title, subtitle, description, edge, children } = props;
 
   return (
     <Paper
@@ -14,6 +15,7 @@ const BoxedContent = (props) => {
           md: 4,
         },
       }}
+      className={edge ? styles.edge : styles.noEdge}
     >
       <Grid container maxWidth={"xl"} spacing={2}>
         <Grid
