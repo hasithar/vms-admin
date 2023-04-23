@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Typography,
-  Grid,
-} from "@mui/material";
+import { Grid } from "@mui/material";
 
 import Page from "@/components/layout/pageLayout/Page/Page.component";
 import BoxedContent from "@/components/layout/pageLayout/BoxedContent/BoxedContent.component";
 import UIForm from "@/components/UI/UIForm/UIForm.component";
-import UIStepper from "@/components/UI/UIStepper/UIStepper.component";
+import UIStepperNav from "@/components/UI/UIStepper/UIStepperNav.component";
+import {
+  ReservationVenueForm,
+  ReservationDetailConfirm,
+} from "@/features/Admin";
 // import { ReservationForm, getAllReservations, getAllUsers } from "@/features/Admin";
 // import { useDispatch, useSelector } from "react-redux";
 
@@ -36,6 +32,39 @@ const ReservationAdd = () => {
   //   getReservations();
   //   getUsers();
   // }, [dispatch]);
+  const formParams = {
+    name: {
+      single: "Reservation",
+      multiple: "Reservations",
+    },
+    nav: {
+      prev: "/",
+      next: "/admin/reservations",
+    },
+    mode: "add",
+    // states: { reservations: reservationState, users: userState },
+  };
+
+  const steps = [
+    {
+      title: "Customer Details",
+      component: "",
+    },
+    {
+      title: "Package Details",
+      component: "",
+    },
+    {
+      title: "Venue Details",
+
+      component: <ReservationVenueForm params={formParams} />,
+    },
+    {
+      title: "Complete",
+      componentTitle: "Confirm Reservation  Details",
+      component: <ReservationDetailConfirm params={formParams} />,
+    },
+  ];
 
   const pageprops = {
     title: "Create New Reservation",
@@ -61,105 +90,51 @@ const ReservationAdd = () => {
         },
         stepper: {
           active: true,
+          steps: steps,
+          activeStep: activeStep,
+          setActiveStep: setActiveStep,
+        },
+      },
+      footer: {
+        stepper: {
+          active: true,
+          steps: steps,
+          activeStep: activeStep,
+          setActiveStep: setActiveStep,
+          parent: {
+            label: "Reservations",
+            href: "/admin/reservations",
+          },
         },
       },
     },
   };
 
-  const formParams = {
-    name: {
-      single: "Reservation",
-      multiple: "Reservations",
-    },
-    nav: {
-      prev: "/",
-      next: "/admin/reservations",
-    },
-    mode: "add",
-    // states: { reservations: reservationState, users: userState },
-  };
-
-  const steps = [
-    "Select campaign settings",
-    "Create an ad group",
-    "Create an ad",
-  ];
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleSkip = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return (
     <>
       <Page pageprops={pageprops}>
-        <Grid container>
-          <Grid item md={8}>
-            <BoxedContent
-              title="Enter Customer Details"
-              subtitle=""
-              description=""
-            >
+        <BoxedContent
+          title={steps[activeStep]?.componentTitle}
+          subtitle=""
+          description=""
+        >
+          <Grid container>
+            <Grid item md={8}>
               <UIForm params={formParams}>
+                <>{steps[activeStep].component}</>
                 {/* <ReservationForm params={formParams} /> */}
               </UIForm>
-            </BoxedContent>
-          </Grid>
+              Step {activeStep + 1}
+              {pageprops?.widgets?.footer?.stepper?.active && (
+                <UIStepperNav stepper={pageprops?.widgets?.footer?.stepper} />
+              )}
+            </Grid>
 
-          <Grid item md={4}>
-            <BoxedContent title="" subtitle="" description="">
+            <Grid item md={4}>
               Summary
-            </BoxedContent>
+            </Grid>
           </Grid>
-        </Grid>
-
-        <UIStepper activeStep={activeStep} steps={steps} />
-
-        <Box sx={{ width: "100%" }}>
-          {activeStep === steps.length ? (
-            <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All steps completed - you&apos;re finished
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Box sx={{ flex: "1 1 auto" }} />
-                <Button onClick={handleReset}>Reset</Button>
-              </Box>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                Step {activeStep + 1}
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                >
-                  Back
-                </Button>
-                <Box sx={{ flex: "1 1 auto" }} />
-
-                <Button onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? "Finish" : "Next"}
-                </Button>
-              </Box>
-            </React.Fragment>
-          )}
-        </Box>
+        </BoxedContent>
       </Page>
     </>
   );

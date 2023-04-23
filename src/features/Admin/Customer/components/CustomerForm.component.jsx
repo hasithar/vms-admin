@@ -20,6 +20,7 @@ import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import styles from "./../styles/CustomerForm.module.scss";
 import { addCustomer, updateCustomer } from "../slices/customer.slice";
+import { titleOptions } from "@/constants/options/titleOptions";
 
 const CustomerForm = (props) => {
   const { params, handleSuccessDialog, handleErrorAlert } = props;
@@ -79,14 +80,6 @@ const CustomerForm = (props) => {
     status: 1,
     comments: "",
   };
-
-  const titleOptions = [
-    { value: "Mr", label: "Mr" },
-    { value: "Mrs", label: "Mrs" },
-    { value: "Miss", label: "Miss" },
-    { value: "Ms", label: "Ms" },
-    { value: "Dr", label: "Dr" },
-  ];
 
   const handleSubmit = (values) => {
     if (values && params?.mode === "add") {

@@ -18,10 +18,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import styles from "./../styles/CustomerForm.module.scss";
 import { addCustomer, updateCustomer } from "../slices/customer.slice";
+import { titleOptions } from "@/constants/options/titleOptions";
 
-const CustomerForm = (props) => {
+const AppointmentForm = (props) => {
   const { params, handleSuccessDialog, handleErrorAlert } = props;
   const { states } = params;
 
@@ -50,8 +50,8 @@ const CustomerForm = (props) => {
       .required("Phone number is required")
       .matches(/^[0-9-+]{10,}$/, "Please enter a valid phone number"),
     email: Yup.string().email().nullable(true),
-    address: Yup.string().nullable(true),
-    city: Yup.string().nullable(true),
+    date: Yup.string().nullable(true),
+    time: Yup.string().nullable(true),
     referredBy: Yup.object().shape({
       id: Yup.string(),
       name: Yup.string(),
@@ -62,7 +62,7 @@ const CustomerForm = (props) => {
       name: Yup.string(),
       role: Yup.string(),
     }),
-    status: Yup.number().required("Status is required"),
+    status: Yup.string().required("Status is required"),
     comments: Yup.string().max(600).nullable(true),
   });
 
@@ -72,29 +72,25 @@ const CustomerForm = (props) => {
     lastname: "",
     phone: "",
     email: "",
-    address: "",
-    city: "",
+    date: "",
+    time: "",
     referredBy: undefined,
     assignedTo: undefined,
     status: 1,
     comments: "",
   };
 
-  const titleOptions = [
-    { value: "Mr", label: "Mr" },
-    { value: "Mrs", label: "Mrs" },
-    { value: "Miss", label: "Miss" },
-    { value: "Ms", label: "Ms" },
-    { value: "Dr", label: "Dr" },
-  ];
-
   const handleSubmit = (values) => {
-    if (values && params?.mode === "add") {
-      dispatch(addCustomer(values));
-    }
-    if (values && params?.mode === "edit") {
-      dispatch(updateCustomer(params?.data?._id, values));
-    }
+    console.log(
+      "🚀 ~ file: AppointmentForm.component.jsx:84 ~ handleSubmit ~ values:",
+      values
+    );
+    // if (values && params?.mode === "add") {
+    //   dispatch(addCustomer(values));
+    // }
+    // if (values && params?.mode === "edit") {
+    //   dispatch(updateCustomer(params?.data?._id, values));
+    // }
   };
 
   const formatAutoCompleteData = (customers, users) => {
@@ -104,7 +100,7 @@ const CustomerForm = (props) => {
       usersFormatted,
       referredByOptions = [];
 
-    customersFormatted = customers?.data?.map((option) => {
+    customersFormatted = customers?.allData?.map((option) => {
       const firstLetter = option.firstname[0].toUpperCase();
       return {
         firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
@@ -149,7 +145,7 @@ const CustomerForm = (props) => {
 
   useEffect(() => {
     const handleSuccess = () => {
-      if (customerState?.data && alertState.severity === "success") {
+      if (customerState?.currentData && alertState.severity === "success") {
         const message = {
           title: alertState?.title,
           description: alertState?.description,
@@ -160,7 +156,7 @@ const CustomerForm = (props) => {
     };
 
     const handleError = () => {
-      if (!customerState?.data && alertState.severity === "error") {
+      if (!customerState?.currentData && alertState.severity === "error") {
         const message = {
           title: alertState?.title,
           description: alertState?.description,
@@ -250,10 +246,7 @@ const CustomerForm = (props) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     variant="standard"
-                    className={styles.textField}
                     sx={{ height: 40 }}
-
-                    // size="small"
                   >
                     {titleOptions.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
@@ -280,7 +273,6 @@ const CustomerForm = (props) => {
                   error={touched.firstname && Boolean(errors.firstname)}
                   helperText={touched.firstname && errors.firstname}
                   variant="standard"
-                  className={styles.textField}
                   size="small"
                 />
               </Grid>
@@ -296,7 +288,6 @@ const CustomerForm = (props) => {
                   error={touched.lastname && Boolean(errors.lastname)}
                   helperText={touched.lastname && errors.lastname}
                   variant="standard"
-                  className={styles.textField}
                   size="small"
                 />
               </Grid>
@@ -312,7 +303,6 @@ const CustomerForm = (props) => {
                   error={touched.phone && Boolean(errors.phone)}
                   helperText={touched.phone && errors.phone}
                   variant="standard"
-                  className={styles.textField}
                   size="small"
                 />
               </Grid>
@@ -328,7 +318,6 @@ const CustomerForm = (props) => {
                   error={touched.email && Boolean(errors.email)}
                   helperText={touched.email && errors.email}
                   variant="standard"
-                  className={styles.textField}
                   size="small"
                 />
               </Grid>
@@ -344,7 +333,6 @@ const CustomerForm = (props) => {
                   error={touched.address && Boolean(errors.address)}
                   helperText={touched.address && errors.address}
                   variant="standard"
-                  className={styles.textField}
                   size="small"
                 />
               </Grid>
@@ -360,7 +348,6 @@ const CustomerForm = (props) => {
                   error={touched.city && Boolean(errors.city)}
                   helperText={touched.city && errors.city}
                   variant="standard"
-                  className={styles.textField}
                   size="small"
                 />
               </Grid>
@@ -382,18 +369,28 @@ const CustomerForm = (props) => {
                   }}
                   fullWidth
                   loading={autocompleteLoading}
-                  renderInput={(params) => (
+                  renderInput={(autocpmleteparams) => (
                     <TextField
-                      {...params}
+                      {...autocpmleteparams}
                       fullWidth
                       margin="normal"
-                      label="Referred By"
+                      label={
+                        <>
+                          Referred By
+                          {params?.mode === "edit" ? (
+                            <span>
+                              &nbsp;:&nbsp;
+                              <strong>{params?.data?.referredBy?.name}</strong>
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      }
                       variant="standard"
                       size="small"
-                      className={styles.textField}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      // value={values.referredBy}
                       helperText={
                         touched.referredBy && errors.referredBy
                           ? errors.referredBy
@@ -403,21 +400,6 @@ const CustomerForm = (props) => {
                     />
                   )}
                 />
-
-                {/* <Autocomplete      
-                  disableClearable={true}
-                  onChange={(event, value) => {
-                    setFieldValue(measurementId, value.id);
-                  }}
-                  classes={{
-                    root: styles.autocompleteRoot,
-                    inputRoot: styles.autocompleteInputRoot,
-                    option: [patternStyles.autoCompleteOption],
-                    groupLabel: styles.autoCompleteGroupLabel,
-                  }}
-       
-                  )}
-                /> */}
               </Grid>
               <Grid item xs={12} md={6}>
                 <Autocomplete
@@ -438,15 +420,26 @@ const CustomerForm = (props) => {
                   }}
                   fullWidth
                   loading={autocompleteLoading}
-                  renderInput={(params) => (
+                  renderInput={(autocompleteparams) => (
                     <TextField
-                      {...params}
+                      {...autocompleteparams}
                       fullWidth
                       margin="normal"
-                      label="Assigned To"
+                      label={
+                        <>
+                          Assigned To
+                          {params?.mode === "edit" ? (
+                            <span>
+                              &nbsp;:&nbsp;
+                              <strong>{params?.data?.assignedTo?.name}</strong>
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </>
+                      }
                       variant="standard"
                       size="small"
-                      className={styles.textField}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       helperText={
@@ -471,7 +464,6 @@ const CustomerForm = (props) => {
                   error={touched.comments && Boolean(errors.comments)}
                   helperText={touched.comments && errors.comments}
                   variant="standard"
-                  className={styles.textField}
                   size="small"
                 />
               </Grid>
@@ -546,4 +538,4 @@ const CustomerForm = (props) => {
   );
 };
 
-export default CustomerForm;
+export default AppointmentForm;

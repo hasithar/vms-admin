@@ -6,10 +6,11 @@ import {
   Search as SearchIcon,
   AddCircleOutlineOutlined as AddCircleIcon,
 } from "@mui/icons-material";
+import UIStepper from "@/components/UI/UIStepper/UIStepper.component";
 
 const HeaderWidgets = (props) => {
   const { widgets } = props;
-  const { search, buttons } = widgets;
+  const { search, buttons, stepper } = widgets;
 
   const navigate = useNavigate();
 
@@ -44,6 +45,10 @@ const HeaderWidgets = (props) => {
               {item?.label}
             </Button>
           ))}
+
+        {stepper?.active && (
+          <UIStepper activeStep={stepper?.activeStep} steps={stepper?.steps} />
+        )}
       </Stack>
     </Box>
   );

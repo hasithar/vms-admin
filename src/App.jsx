@@ -54,6 +54,7 @@ import ReservationAdd from "./pages/Admin/Reservations/ReservationAdd/Reservatio
 
 // Appointments
 import AppointmentList from "./pages/Admin/Appointments/AppointmentList/AppointmentList";
+import AppointmentAdd from "./pages/Admin/Appointments/AppointmentAdd/AppointmentAdd";
 
 // Invoices
 import Invoices from "./pages/Admin/Invoices/Invoices";
@@ -143,8 +144,11 @@ const App = (props) => {
 
             <Route path="/admin/appointments">
               <Route index element={<AppointmentList />} />
-              {/* <Route path="/admin/appointments/add" element={<CustomerAdd />} />
               <Route
+                path="/admin/appointments/add"
+                element={<AppointmentAdd />}
+              />
+              {/*  <Route
                 path="/admin/appointments/:id/edit"
                 element={<CustomerEdit />}
               /> */}

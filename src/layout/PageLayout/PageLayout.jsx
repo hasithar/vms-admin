@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { Box, Container, createTheme, useMediaQuery } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import Header from "@/components/layout/pageLayout/Header/Header.component";
 import Sidebar from "@/components/layout/pageLayout/Sidebar/Sidebar";
 
@@ -49,7 +51,9 @@ const PageLayout = ({ children }) => {
           }}
         >
           <Container maxWidth={false} sx={{ mt: 15, mb: 4 }}>
-            {children}
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              {children}
+            </LocalizationProvider>
           </Container>
         </Box>
       </Box>

@@ -1,4 +1,5 @@
 import ParameterCard from "./components/ParameterCard.component";
+import ParameterTable from "./components/ParameterTable.component";
 // import UserTable from "./components/UserTable.component";
 // import UserForm from "./components/UserForm.component";
 
@@ -20,6 +21,7 @@ import ParameterCard from "./components/ParameterCard.component";
 
 export {
   ParameterCard,
+  ParameterTable,
   // UserTable,
   // getAllParameters,
   // getSingleParameter,

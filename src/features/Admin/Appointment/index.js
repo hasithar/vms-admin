@@ -1,4 +1,5 @@
 import AppointmentCalendar from "./components/AppointmentCalendar.component";
+import AppointmentForm from "./components/AppointmentForm.component";
 // import CustomerTable from "./components/CustomerTable.component";
 // import CustomerForm from "./components/CustomerForm.component";
 
@@ -20,6 +21,7 @@ import AppointmentCalendar from "./components/AppointmentCalendar.component";
 
 export {
   AppointmentCalendar,
+  AppointmentForm,
   //   CustomerTable,
   //   getAllParameters,
   //   getSingleParameter,

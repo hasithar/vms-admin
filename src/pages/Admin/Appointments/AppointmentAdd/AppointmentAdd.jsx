@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
+import { Grid } from "@mui/material";
 import Page from "@/components/layout/pageLayout/Page/Page.component";
 import BoxedContent from "@/components/layout/pageLayout/BoxedContent/BoxedContent.component";
 import UIForm from "@/components/UI/UIForm/UIForm.component";
-import { CustomerForm, getAllCustomers, getAllUsers } from "@/features/Admin";
+import {
+  AppointmentForm,
+  getAllCustomers,
+  getAllUsers,
+} from "@/features/Admin";
 import { useDispatch, useSelector } from "react-redux";
 
-const CustomerAdd = () => {
+const AppointmentAdd = () => {
   const dispatch = useDispatch();
 
   const customerState = useSelector((state) => state.customer);
@@ -25,14 +30,14 @@ const CustomerAdd = () => {
   }, [dispatch]);
 
   const pageprops = {
-    title: "Register New Customer",
+    title: "Create New Appointment",
     breadcrumbs: [
       {
-        title: "Customer Management",
-        href: "customers",
+        title: "Appointments",
+        href: "appointments",
       },
       {
-        title: "Register New Customer",
+        title: "Create New Appointment",
         href: "",
       },
     ],
@@ -52,12 +57,12 @@ const CustomerAdd = () => {
 
   const formParams = {
     name: {
-      single: "Customer",
-      multiple: "Customers",
+      single: "Appointment",
+      multiple: "Appointments",
     },
     nav: {
       prev: "/",
-      next: "/admin/customers",
+      next: "/admin/appointments",
     },
     mode: "add",
     states: { customers: customerState, users: userState },
@@ -66,14 +71,26 @@ const CustomerAdd = () => {
   return (
     <>
       <Page pageprops={pageprops}>
-        <BoxedContent title="Enter Customer Details" subtitle="" description="">
-          <UIForm params={formParams}>
-            <CustomerForm params={formParams} />
-          </UIForm>
+        <BoxedContent
+          title="Enter Appointment Details"
+          subtitle=""
+          description=""
+        >
+          <Grid container spacing="2">
+            <Grid item md={8}>
+              <UIForm params={formParams}>
+                <AppointmentForm params={formParams} />
+              </UIForm>
+            </Grid>
+
+            <Grid item md={4}>
+              sidebar
+            </Grid>
+          </Grid>
         </BoxedContent>
       </Page>
     </>
   );
 };
 
-export default CustomerAdd;
+export default AppointmentAdd;

@@ -1,4 +1,6 @@
 import ReservationCalendar from "./components/ReservationCalendar.component";
+import ReservationVenueForm from "./components/ReservationVenueForm.component";
+import ReservationDetailConfirm from "./components/ReservationDetailConfirm.component";
 // import CustomerTable from "./components/CustomerTable.component";
 // import CustomerForm from "./components/CustomerForm.component";
 
@@ -20,6 +22,8 @@ import ReservationCalendar from "./components/ReservationCalendar.component";
 
 export {
   ReservationCalendar,
+  ReservationVenueForm,
+  ReservationDetailConfirm,
   //   CustomerTable,
   //   getAllParameters,
   //   getSingleParameter,

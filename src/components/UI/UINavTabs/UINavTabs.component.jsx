@@ -17,7 +17,7 @@ const UINavTabs = (props) => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    navigate(`../../${categories[newValue]?.slug}`);
+    navigate(`../${categories[newValue]?.slug}`);
   };
 
   return (
@@ -37,9 +37,10 @@ const UINavTabs = (props) => {
         sx={{
           borderRight: 1,
           borderColor: "divider",
-          bgcolor: "#eee",
+          bgcolor: "#efefef",
           minWidth: 200,
           width: "100%",
+          borderRadius: "0.3rem",
         }}
       >
         {categories.map((category, i) => {
