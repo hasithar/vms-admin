@@ -140,8 +140,8 @@ const UserTable = () => {
 
   useEffect(() => {
     const formatData = () => {
-      if (users?.data?.length > 0) {
-        const formattedData = users?.data.map((user, i) => {
+      if (users?.allData?.length > 0) {
+        const formattedData = users?.allData.map((user, i) => {
           const {
             __v,
             createdAt,

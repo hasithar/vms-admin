@@ -43,7 +43,7 @@ const UserForm = (props) => {
   const alertState = useSelector((state) => state.alert);
 
   const formikRef = React.createRef();
-  const debug = true;
+  const debug = false;
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -186,7 +186,14 @@ const UserForm = (props) => {
 
     if (usersFormatted) {
       managedByOptions = usersFormatted.filter(
-        (user) => user.role === ("manager" || "Manager")
+        (user) =>
+          user.role ===
+          ("manager" ||
+            "general-manager" ||
+            "assistant-manager" ||
+            "marketing-manager" ||
+            "sales-manager" ||
+            "operations-manager")
       );
     }
 
@@ -243,7 +250,6 @@ const UserForm = (props) => {
           "managedBy",
           "status",
           "comments",
-          "isLoginEnabled",
           "username",
         ];
 
@@ -472,7 +478,7 @@ const UserForm = (props) => {
                     sx={{ height: 40 }}
                   >
                     {userRoleOptions.map((option) => (
-                      <MenuItem key={option.slug} value={option.group}>
+                      <MenuItem key={option.slug} value={option.slug}>
                         {option.name}
                       </MenuItem>
                     ))}

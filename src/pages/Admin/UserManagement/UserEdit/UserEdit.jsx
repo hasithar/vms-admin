@@ -16,10 +16,10 @@ const UserEdit = () => {
 
   useEffect(() => {
     const getCurrentParam = () => {
-      if (userState?.data?.length === 0) {
+      if (userState?.allData?.length === 0) {
         dispatch(getAllUsers());
       }
-      const cp = userState?.data?.filter(
+      const cp = userState?.allData?.filter(
         (item) => item._id === routerParams?.id
       );
 
@@ -68,6 +68,7 @@ const UserEdit = () => {
     },
     mode: "edit",
     data: currentParamData,
+    states: { users: userState },
   };
 
   return (
