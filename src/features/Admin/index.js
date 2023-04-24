@@ -7,6 +7,7 @@ import {
   ReservationCalendar,
   ReservationVenueForm,
   ReservationDetailConfirm,
+  ReservationCustomerForm,
 } from "./Reservation";
 import { ParameterTable } from "./Parameter";
 
@@ -35,6 +36,13 @@ import {
   addAppointmentExistingCustomer,
   getAllAppointments,
 } from "./Appointment";
+
+import {
+  reservationReducer,
+  addReservationNewCustomer,
+  addReservationExistingCustomer,
+  // getAllAppointments,
+} from "./Reservation";
 
 export {
   // customer
@@ -66,7 +74,11 @@ export {
   addAppointmentExistingCustomer,
   getAllAppointments,
   // reservations
+  reservationReducer,
+  addReservationNewCustomer,
+  addReservationExistingCustomer,
   ReservationCalendar,
   ReservationVenueForm,
   ReservationDetailConfirm,
+  ReservationCustomerForm,
 };

@@ -5,6 +5,7 @@ import {
   customerReducer,
   userReducer,
   appointmentReducer,
+  reservationReducer,
 } from "@/features/Admin";
 
 const reducer = {
@@ -13,6 +14,7 @@ const reducer = {
   customer: customerReducer,
   user: userReducer,
   appointment: appointmentReducer,
+  reservation: reservationReducer,
 };
 
 const store = configureStore({

@@ -9,7 +9,7 @@ const getAllParameters = async () => {
 
   try {
     const response = await axios.get(
-      `${apiConstants.API_URL}/customers`,
+      `${apiConstants.API_URL}/reservations`,
       requestOptions
     );
     return response.data;
@@ -25,7 +25,7 @@ const getSingleParameter = async (id) => {
 
   try {
     const response = await axios.get(
-      `${apiConstants.API_URL}/customers/${id}`,
+      `${apiConstants.API_URL}/reservations/${id}`,
       requestOptions
     );
     return response.data;
@@ -41,7 +41,7 @@ const addParameter = async (data) => {
 
   try {
     const response = await axios.post(
-      `${apiConstants.API_URL}/customers`,
+      `${apiConstants.API_URL}/reservations`,
       data,
       requestOptions
     );
@@ -58,7 +58,7 @@ const updateParameter = async (id, data) => {
 
   try {
     const response = await axios.put(
-      `${apiConstants.API_URL}/customers/${id}`,
+      `${apiConstants.API_URL}/reservations/${id}`,
       data,
       requestOptions
     );
@@ -75,7 +75,7 @@ const deleteParameter = async (id) => {
 
   try {
     const response = await axios.delete(
-      `${apiConstants.API_URL}/customers/${id}`,
+      `${apiConstants.API_URL}/reservations/${id}`,
       requestOptions
     );
     return response.data;

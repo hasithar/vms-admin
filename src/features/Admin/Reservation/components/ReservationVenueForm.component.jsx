@@ -19,7 +19,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 import styles from "./../styles/ReservationVenueForm.module.scss";
-import { addCustomer, updateCustomer } from "../slices/customer.slice";
+import { addCustomer, updateCustomer } from "@features/Admin";
 import { titleOptions } from "@/constants/options/titleOptions";
 
 const ReservationVenueForm = (props) => {

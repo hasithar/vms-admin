@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
@@ -8,54 +9,118 @@ import {
   Appointments,
   TodayButton,
   AppointmentTooltip,
-  AppointmentForm,
 } from "@devexpress/dx-react-scheduler-material-ui";
-import { format } from "date-fns";
+import { clearAlert } from "@/features/Common";
+import { getAllAppointments } from "@features/Admin";
+import { Stack, Typography } from "@mui/material";
 
-const currentDate = format(new Date(), "yyyy-MM-dd");
-export const appointments = [
+export const weddings = [
   {
-    title: "Wedding",
+    title: "Brochure Design Review",
+    startDate: new Date(2023, 3, 20, 14, 10),
+    endDate: new Date(2023, 3, 20, 15, 30),
+    descriptin: "lorem ipsum dolor sit amet",
     customer: "John Doe",
-    startDate: new Date(2023, 3, 24, 8, 0),
-    endDate: new Date(2023, 3, 24, 15, 0),
   },
   {
-    title: "Book Flights to San Fran for Sales Trip",
-    startDate: new Date(2023, 3, 23, 12, 0),
-    endDate: new Date(2023, 3, 23, 13, 0),
+    title: "Brochure Design Review",
+    startDate: new Date(2023, 3, 20, 16, 10),
+    endDate: new Date(2023, 3, 20, 17, 30),
+    descriptin: "lorem ipsum dolor sit amet",
+    customer: "John Doe",
   },
 ];
 
-const Appointment = ({ children, style, data, ...restProps }) => {
-  return (
-    <Appointments.Appointment
-      {...restProps}
-      style={{
-        ...style,
-        backgroundColor: "#FFC107",
-        borderRadius: "8px",
-      }}
-    >
-      {children}
-      {data?.customer}
-    </Appointments.Appointment>
-  );
-};
+const Appointment = ({ children, style, data, ...restProps }) => (
+  <Appointments.Appointment
+    {...restProps}
+    style={{
+      ...style,
+      backgroundColor: data?.type === "wedding" ? "#F42456" : "#93693E",
+      color: "#fff",
+      textAlign: "center",
+    }}
+  >
+    {/* {children} */}
+    <Stack>
+      <Typography sx={{ fontSize: "0.8rem" }}>
+        {data?.customer?.name}
+      </Typography>
+      <Typography sx={{ fontSize: "0.7rem" }}> {data?.descriptin}</Typography>
+    </Stack>
+  </Appointments.Appointment>
+);
 
 const ReservationCalendar = () => {
+  const today = new Date();
+  const dispatch = useDispatch();
+
+  const appointmentState = useSelector((state) => state.appointment);
+
+  const [events, setEvents] = useState([]);
+
+  const formatEvents = (weddings) => {
+    let weddingsFormatted = [];
+
+    weddingsFormatted = weddings.map((item) => {
+      const date = new Date(item?.date);
+
+      return {
+        type: "wedding",
+        title: "Wedding",
+        startDate: new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          9,
+          0
+        ),
+        endDate: new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          10,
+          0
+        ),
+        descriptin: item?.comment,
+        customer: item?.customer?.name,
+        ...item,
+      };
+    });
+
+    setEvents(weddingsFormatted);
+  };
+
+  useEffect(() => {
+    formatEvents(weddings);
+  }, []);
+
+  // const history = useHistory();
+
+  const handleDoubleClick = ({ data }) => {
+    console.log(`Double-clicked date: ${data.startDate}`);
+    // Call your custom function here
+  };
+
+  useEffect(() => {
+    dispatch(clearAlert());
+    dispatch(getAllAppointments());
+  }, [dispatch]);
+
   return (
     <div>
-      <Scheduler data={appointments}>
-        <ViewState defaultCurrentDate={currentDate} />
-        <MonthView />
-        <Toolbar />
-        <DateNavigator />
-        <TodayButton />
-        <Appointments appointmentComponent={Appointment} />
-        <AppointmentTooltip showCloseButton showOpenButton />
-        <AppointmentForm readOnly />
-      </Scheduler>
+      {events && (
+        <Scheduler data={events}>
+          <ViewState defaultCurrentDate={today} />
+          <MonthView onDoubleClick={handleDoubleClick} />
+          <Toolbar />
+          <DateNavigator />
+          <TodayButton />
+          <Appointments appointmentComponent={Appointment} />
+          {/* <AppointmentTooltip showCloseButton showOpenButton /> */}
+          {/* <AppointmentForm readOnly /> */}
+        </Scheduler>
+      )}
     </div>
   );
 };

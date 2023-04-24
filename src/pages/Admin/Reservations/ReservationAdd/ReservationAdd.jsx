@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
-
 import Page from "@/components/layout/pageLayout/Page/Page.component";
 import BoxedContent from "@/components/layout/pageLayout/BoxedContent/BoxedContent.component";
 import UIForm from "@/components/UI/UIForm/UIForm.component";
@@ -8,30 +8,33 @@ import UIStepperNav from "@/components/UI/UIStepper/UIStepperNav.component";
 import {
   ReservationVenueForm,
   ReservationDetailConfirm,
+  ReservationCustomerForm,
+  getAllCustomers,
+  getAllUsers,
 } from "@/features/Admin";
 // import { ReservationForm, getAllReservations, getAllUsers } from "@/features/Admin";
 // import { useDispatch, useSelector } from "react-redux";
 
 const ReservationAdd = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const reservationState = useSelector((state) => state.reservation);
-  // const userState = useSelector((state) => state.user);
+  const customerState = useSelector((state) => state.customer);
+  const userState = useSelector((state) => state.user);
 
   const [activeStep, setActiveStep] = useState(0);
 
-  // useEffect(() => {
-  //   const getReservations = () => {
-  //     dispatch(getAllReservations());
-  //   };
+  useEffect(() => {
+    const getCustomers = () => {
+      dispatch(getAllCustomers());
+    };
 
-  //   const getUsers = () => {
-  //     dispatch(getAllUsers());
-  //   };
+    const getUsers = () => {
+      dispatch(getAllUsers());
+    };
 
-  //   getReservations();
-  //   getUsers();
-  // }, [dispatch]);
+    getCustomers();
+    getUsers();
+  }, [dispatch]);
   const formParams = {
     name: {
       single: "Reservation",
@@ -42,13 +45,13 @@ const ReservationAdd = () => {
       next: "/admin/reservations",
     },
     mode: "add",
-    // states: { reservations: reservationState, users: userState },
+    states: { customers: customerState, users: userState },
   };
 
   const steps = [
     {
       title: "Customer Details",
-      component: "",
+      component: <ReservationCustomerForm params={formParams} />,
     },
     {
       title: "Package Details",

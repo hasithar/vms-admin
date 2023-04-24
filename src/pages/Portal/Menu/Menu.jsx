@@ -2,55 +2,7 @@ import React, { useState } from "react";
 import { Button, Container, Box, Typography, Stack, Grid } from "@mui/material";
 import MenuSet from "./MenuSet.component";
 
-const menuItems = [
-  {
-    type: "salad",
-    title: "Salads",
-    titleSingular: "Salad",
-    items: [
-      {
-        title: "Cream of Chicken ",
-        description: "",
-        image: "",
-      },
-      {
-        title: "Vegetable Broth ",
-        description: "",
-        image: "",
-      },
-      {
-        title: "Sweet Corn & Egg Drop ",
-        description: "",
-        image: "",
-      },
-      {
-        title: "Cream of Mushroom ",
-        description: "",
-        image: "",
-      },
-      {
-        title: "Cream of Vegetable",
-        description: "",
-        image: "",
-      },
-      {
-        title: "Seafood Broth",
-        description: "",
-        image: "",
-      },
-      {
-        title: "Cream of Tomato",
-        description: "",
-        image: "",
-      },
-      {
-        title: "Seafood Chowder",
-        description: "",
-        image: "",
-      },
-    ],
-  },
-];
+import { menuItemsData } from "@/constants";
 
 const PortalMenu = () => {
   return (
@@ -83,7 +35,7 @@ const PortalMenu = () => {
 
       <Grid container>
         <Grid item md={4}>
-          {menuItems.map((category) => (
+          {menuItemsData.map((category) => (
             <MenuSet
               key={category?.type}
               categoryTitle={category?.title}
