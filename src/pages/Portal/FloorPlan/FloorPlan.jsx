@@ -48,6 +48,8 @@ import React, { useState, useRef } from "react";
 import Draggable from "react-draggable";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { Container, Box, Stack, Button, Typography } from "@mui/material";
+import styles from "./FloorPlan.module.scss";
 
 const PortalFloorPlan = () => {
   const [positions, setPositions] = useState([]);
@@ -89,32 +91,65 @@ const PortalFloorPlan = () => {
   const boxes = ["Box 1", "Box 2", "Box 3"];
 
   return (
-    <div>
-      {boxes.map((box, index) => {
-        const ref = React.createRef();
-        refList.current[index] = ref;
-        return (
-          <Draggable
-            key={index}
-            defaultPosition={{ x: 0, y: 0 }}
-            onDrag={(_, { x, y }) => handleDrag(index, { x, y })}
+    <Container>
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h5" component={"h1"}>
+          Floor Plan
+        </Typography>
+        <Typography variant="body2">
+          Plan and manage your wedding banquet hall layout
+        </Typography>
+      </Box>
+
+      <Box>
+        <Box
+          sx={{ background: "#efefef", px: 2, py: 1, mb: 2, borderRadius: 1 }}
+        >
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            alignContent={"center"}
+            alignItems={"center"}
           >
-            <div
-              style={{
-                border: "1px solid black",
-                padding: "10px",
-                margin: "10px",
-              }}
-              ref={ref}
+            <Typography variant="body2">No of Guests Invited: 300</Typography>
+            <Box sx={{ flex: 1 }}>&nbsp;</Box>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleSavePDF}
             >
-              {box}
-            </div>
-          </Draggable>
-        );
-      })}
-      <button onClick={handleSavePositions}>Save Positions</button>
-      <button onClick={handleSavePDF}>Save as PDF</button>
-    </div>
+              Save as PDF
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSavePositions}
+              sx={{ ml: 1 }}
+            >
+              Save Positions
+            </Button>
+          </Stack>
+        </Box>
+
+        <Box>
+          {boxes.map((box, index) => {
+            const ref = React.createRef();
+            refList.current[index] = ref;
+            return (
+              <Draggable
+                key={index}
+                defaultPosition={{ x: 0, y: 0 }}
+                onDrag={(_, { x, y }) => handleDrag(index, { x, y })}
+              >
+                <Box className={styles.box} ref={ref}>
+                  {box}
+                </Box>
+              </Draggable>
+            );
+          })}
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

@@ -52,25 +52,25 @@ export const { getAll, getSingle, addSingle, updateSingle, setLoading, clear } =
 // export const selectToken = (state) => state.authentication.token;
 // export const selectIsLoggedIn = (state) => state.authentication.isLoggedIn;
 
-// export const getAllCustomers = () => async (dispatch) => {
-//   try {
-//     dispatch(setLoading(true));
-//     const response = await getAllParameters();
-//     dispatch(getAll(response));
-//     dispatch(setLoading(false));
-//   } catch (error) {
-//     dispatch(setLoading(false));
-//     if (error.response) {
-//       dispatch(
-//         showAlert({
-//           title: error?.response?.data?.message,
-//           description: error?.response?.data?.description,
-//           severity: error?.response?.data?.severity,
-//         })
-//       );
-//     }
-//   }
-// };
+export const getAllAppointments = () => async (dispatch) => {
+  try {
+    dispatch(setLoading(true));
+    const response = await getAllParameters();
+    dispatch(getAll(response));
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(setLoading(false));
+    if (error.response) {
+      dispatch(
+        showAlert({
+          title: error?.response?.data?.message,
+          description: error?.response?.data?.description,
+          severity: error?.response?.data?.severity,
+        })
+      );
+    }
+  }
+};
 
 // export const getCustomer = (id) => async (dispatch) => {
 //   dispatch(clearAlert());
@@ -106,12 +106,53 @@ export const addAppointmentNewCustomer = (data) => async (dispatch) => {
     const opsResponse = await addParameter({
       customer: {
         id: customerResponse?.data?._id,
-        title: customerResponse?.data?.title,
-        firstname: customerResponse?.data?.firstname,
-        lastname: customerResponse?.data?.lastname,
+        name: `${customerResponse?.data?.firstname} ${customerResponse?.data?.lastname}`,
         phone: customerResponse?.data?.phone,
         email: customerResponse?.data?.email,
       },
+      date: appointMentData?.date,
+      time: appointMentData?.time,
+      referredBy: appointMentData?.referredBy,
+      assignedTo: appointMentData?.assignedTo,
+      status: appointMentData?.status,
+      comments: appointMentData?.comments,
+    });
+    dispatch(addSingle(opsResponse?.data));
+
+    const dataResponse = await getAllParameters();
+    dispatch(getAll(dataResponse));
+    dispatch(
+      showAlert({
+        title: opsResponse?.message,
+        description: opsResponse?.description,
+        severity: opsResponse?.severity,
+      })
+    );
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(setLoading(false));
+    if (error.response) {
+      dispatch(
+        showAlert({
+          title: error?.response?.data?.message,
+          description: error?.response?.data?.description,
+          severity: error?.response?.data?.severity,
+        })
+      );
+    }
+  }
+};
+
+export const addAppointmentExistingCustomer = (data) => async (dispatch) => {
+  dispatch(clearAlert());
+
+  try {
+    dispatch(setLoading(true));
+
+    const { customerData, appointMentData } = data;
+
+    const opsResponse = await addParameter({
+      customer: customerData,
       date: appointMentData?.date,
       time: appointMentData?.time,
       referredBy: appointMentData?.referredBy,

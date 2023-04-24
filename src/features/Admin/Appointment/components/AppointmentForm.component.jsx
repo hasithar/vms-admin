@@ -22,17 +22,18 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
-import { addCustomer } from "../../Customer";
 import { titleOptions, appointmentStatusOptions } from "@/constants";
 import styles from "./../styles/AppointmentForm.module.scss";
-import { addAppointmentNewCustomer } from "../../Appointment";
+import {
+  addAppointmentExistingCustomer,
+  addAppointmentNewCustomer,
+} from "../../Appointment";
 
 const AppointmentForm = (props) => {
   const { params, handleSuccessDialog, handleErrorAlert } = props;
   const { states } = params;
 
   const dispatch = useDispatch();
-  const customerState = useSelector((state) => state.customer);
   const appointmentState = useSelector((state) => state.appointment);
   const alertState = useSelector((state) => state.alert);
 
@@ -49,9 +50,9 @@ const AppointmentForm = (props) => {
   };
 
   const formikRef = React.createRef();
-  const debug = true;
+  const debug = false;
 
-  const validationSchema = Yup.object({
+  const newCustomerSchema = Yup.object({
     title: Yup.string().required("Title is Required"),
     firstname: Yup.string()
       .required("Firstname is required")
@@ -79,6 +80,40 @@ const AppointmentForm = (props) => {
     comments: Yup.string().max(600).nullable(true),
   });
 
+  const existingCustomerSchema = Yup.object({
+    title: Yup.string(),
+    firstname: Yup.string().matches(
+      /^[A-Za-z\s]+$/,
+      "First Name must only contain letters"
+    ),
+    lastname: Yup.string().matches(
+      /^[A-Za-z\s]+$/,
+      "Last Name must only contain letters"
+    ),
+    phone: Yup.string().matches(
+      /^[0-9-+]{10,}$/,
+      "Please enter a valid phone number"
+    ),
+    email: Yup.string().email().nullable(true),
+    date: Yup.date().required("Date is required"),
+    time: Yup.date().nullable(true),
+    referredBy: Yup.object().shape({
+      id: Yup.string(),
+      name: Yup.string(),
+      refertype: Yup.string(),
+    }),
+    assignedTo: Yup.object().shape({
+      id: Yup.string(),
+      name: Yup.string(),
+      role: Yup.string(),
+    }),
+    status: Yup.string().required("Status is required"),
+    comments: Yup.string().max(600).nullable(true),
+  });
+
+  const validationSchema =
+    customerType === "new" ? newCustomerSchema : existingCustomerSchema;
+
   const initialValues = {
     customer: "",
     title: "",
@@ -95,15 +130,6 @@ const AppointmentForm = (props) => {
   };
 
   const handleSubmit = (values) => {
-    console.log(
-      "🚀 ~ file: AppointmentForm.component.jsx:84 ~ handleSubmit ~ values:",
-      values
-    );
-    console.log(
-      "🚀 ~ file: AppointmentForm.component.jsx:103 ~ handleSubmit ~ customerType:",
-      customerType
-    );
-
     const customerData = {
       title: values?.title,
       firstname: values?.firstname,
@@ -131,23 +157,20 @@ const AppointmentForm = (props) => {
           })
         );
       }
+
+      if (customerType === "existing") {
+        dispatch(
+          addAppointmentExistingCustomer({
+            customerData: values?.customer,
+            appointMentData: appointMentData,
+          })
+        );
+      }
     }
 
     // if (values && params?.mode === "edit") {
     //   dispatch(updateCustomer(params?.data?._id, values));
     // }
-  };
-
-  const saveCustomer = async (values) => {
-    await dispatch(addCustomer(values));
-
-    setTimeout(() => {
-      const newCustomer = customerState;
-      console.log(
-        "🚀 ~ file: AppointmentForm.component.jsx:108 ~ handleSubmit ~ newCustomer:",
-        newCustomer
-      );
-    }, 300);
   };
 
   const formatAutoCompleteData = (customers, users) => {
@@ -201,37 +224,37 @@ const AppointmentForm = (props) => {
     formatAutoCompleteData(states?.customers, states?.users);
   }, [states]);
 
-  // useEffect(() => {
-  //   const handleSuccess = () => {
-  //     if (customerState?.currentData && alertState.severity === "success") {
-  //       const message = {
-  //         title: alertState?.title,
-  //         description: alertState?.description,
-  //       };
+  useEffect(() => {
+    const handleSuccess = () => {
+      if (appointmentState?.currentData && alertState.severity === "success") {
+        const message = {
+          title: alertState?.title,
+          description: alertState?.description,
+        };
 
-  //       handleSuccessDialog(message);
-  //     }
-  //   };
+        handleSuccessDialog(message);
+      }
+    };
 
-  //   const handleError = () => {
-  //     if (!customerState?.currentData && alertState.severity === "error") {
-  //       const message = {
-  //         title: alertState?.title,
-  //         description: alertState?.description,
-  //       };
-  //       handleErrorAlert(message);
-  //     }
-  //   };
+    const handleError = () => {
+      if (!appointmentState?.currentData && alertState.severity === "error") {
+        const message = {
+          title: alertState?.title,
+          description: alertState?.description,
+        };
+        handleErrorAlert(message);
+      }
+    };
 
-  //   handleSuccess();
-  //   handleError();
-  // }, [
-  //   alertState,
-  //   customerState,
-  //   handleErrorAlert,
-  //   handleSuccessDialog,
-  //   params,
-  // ]);
+    handleSuccess();
+    handleError();
+  }, [
+    alertState,
+    appointmentState,
+    handleErrorAlert,
+    handleSuccessDialog,
+    params,
+  ]);
 
   useEffect(() => {
     const prefillData = () => {

@@ -1,112 +1,98 @@
 import React, { useState } from "react";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Checkbox,
-  Button,
-} from "@mui/material";
-// import foodItems from './foodItems'; // assume an array of 10 food items with properties "title", "description", "image"
+import { Button, Container, Box, Typography, Stack, Grid } from "@mui/material";
+import MenuSet from "./MenuSet.component";
 
-const foodItems = [
+const menuItems = [
   {
-    title: "Pizza",
-    description:
-      "Classic pizza with tomato sauce, mozzarella cheese, and pepperoni",
-    image: "https://images.unsplash.com/photo-1565299622719-44ec25c3a9f0",
-  },
-  {
-    title: "Hamburger",
-    description:
-      "Juicy beef patty with lettuce, tomato, onion, and pickles on a sesame seed bun",
-    image: "https://images.unsplash.com/photo-1610895914165-5d5fb7c5d5e5",
-  },
-  {
-    title: "Sushi",
-    description: "Assorted sushi rolls with fresh fish and vegetables",
-    image: "https://images.unsplash.com/photo-1546964630-824fea62f6eb",
-  },
-  {
-    title: "Tacos",
-    description:
-      "Soft or crispy tacos with seasoned beef, lettuce, tomato, and cheese",
-    image: "https://images.unsplash.com/photo-1579369894219-8d7dc4d66d4e",
-  },
-  {
-    title: "Pasta",
-    description: "Spaghetti with tomato sauce, meatballs, and parmesan cheese",
-    image: "https://images.unsplash.com/photo-1581091010237-0f0b88a7fe8d",
-  },
-  {
-    title: "Burrito",
-    description: "Flour tortilla stuffed with rice, beans, meat, and cheese",
-    image: "https://images.unsplash.com/photo-1566155903538-d1b5f7d71f5d",
-  },
-  {
-    title: "Chicken sandwich",
-    description:
-      "Grilled chicken breast with lettuce, tomato, and mayonnaise on a bun",
-    image: "https://images.unsplash.com/photo-1626181544997-94da2ccf81a7",
-  },
-  {
-    title: "Fried chicken",
-    description: "Crispy fried chicken with mashed potatoes and gravy",
-    image: "https://images.unsplash.com/photo-1621258363693-d3a326ab9628",
-  },
-  {
-    title: "Pho",
-    description: "Vietnamese noodle soup with beef, herbs, and spices",
-    image: "https://images.unsplash.com/photo-1591614611457-6128c2e3e918",
-  },
-  {
-    title: "Pad Thai",
-    description:
-      "Stir-fried rice noodles with shrimp, tofu, peanuts, and vegetables",
-    image: "https://images.unsplash.com/photo-1605651562467-af58ec6f0541",
+    type: "salad",
+    title: "Salads",
+    titleSingular: "Salad",
+    items: [
+      {
+        title: "Cream of Chicken ",
+        description: "",
+        image: "",
+      },
+      {
+        title: "Vegetable Broth ",
+        description: "",
+        image: "",
+      },
+      {
+        title: "Sweet Corn & Egg Drop ",
+        description: "",
+        image: "",
+      },
+      {
+        title: "Cream of Mushroom ",
+        description: "",
+        image: "",
+      },
+      {
+        title: "Cream of Vegetable",
+        description: "",
+        image: "",
+      },
+      {
+        title: "Seafood Broth",
+        description: "",
+        image: "",
+      },
+      {
+        title: "Cream of Tomato",
+        description: "",
+        image: "",
+      },
+      {
+        title: "Seafood Chowder",
+        description: "",
+        image: "",
+      },
+    ],
   },
 ];
 
 const PortalMenu = () => {
-  const [selectedItems, setSelectedItems] = useState([]);
-
-  const handleListItemClick = (item) => {
-    if (selectedItems.includes(item)) {
-      setSelectedItems(
-        selectedItems.filter((selectedItem) => selectedItem !== item)
-      );
-    } else {
-      setSelectedItems([...selectedItems, item]);
-    }
-  };
-
-  const handleLogSelectedItems = () => {
-    console.log(selectedItems);
-  };
-
   return (
-    <div>
-      PortalMenu
-      <List className={"aaa"}>
-        {foodItems.map((item, index) => (
-          <ListItem key={index} onClick={() => handleListItemClick(item)}>
-            <ListItemAvatar>
-              <Avatar alt={item.title} src={item.image} />
-            </ListItemAvatar>
-            <ListItemText primary={item.title} secondary={item.description} />
-            <Checkbox checked={selectedItems.includes(item)} color="primary" />
-          </ListItem>
-        ))}
-      </List>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleLogSelectedItems}
-      >
-        Log selected items
-      </Button>
-    </div>
+    <Container>
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h5" component={"h1"}>
+          Menu
+        </Typography>
+        <Typography variant="body2">
+          Plan and manage your wedding menu
+        </Typography>
+      </Box>
+
+      <Box sx={{ background: "#efefef", px: 2, py: 1, mb: 2, borderRadius: 1 }}>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          alignContent={"center"}
+          alignItems={"center"}
+        >
+          <Typography variant="body2">
+            Selected Menu: <strong>Thotupola Platinum Menu</strong>
+          </Typography>
+          <Box sx={{ flex: 1 }}>&nbsp;</Box>
+          <Button variant="contained" color="primary" onClick={() => {}}>
+            Save Menu Selection
+          </Button>
+        </Stack>
+      </Box>
+
+      <Grid container>
+        <Grid item md={4}>
+          {menuItems.map((category) => (
+            <MenuSet
+              key={category?.type}
+              categoryTitle={category?.title}
+              categoryItems={category?.items}
+            />
+          ))}
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 

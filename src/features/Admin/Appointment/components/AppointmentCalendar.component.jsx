@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import {
   Scheduler,
@@ -9,6 +10,9 @@ import {
   TodayButton,
   AppointmentTooltip,
 } from "@devexpress/dx-react-scheduler-material-ui";
+import { clearAlert } from "@/features/Common";
+import { getAllAppointments } from "@features/Admin";
+import { Stack, Typography } from "@mui/material";
 
 export const appointments = [
   {
@@ -57,16 +61,25 @@ const Appointment = ({ children, style, data, ...restProps }) => (
     style={{
       ...style,
       backgroundColor: data?.type === "wedding" ? "#F42456" : "#93693E",
+      color: "#fff",
+      textAlign: "center",
     }}
   >
-    {children}
-    {data?.customer}
-    {data?.descriptin}
+    {/* {children} */}
+    <Stack>
+      <Typography sx={{ fontSize: "0.8rem" }}>
+        {data?.customer?.name}
+      </Typography>
+      <Typography sx={{ fontSize: "0.7rem" }}> {data?.descriptin}</Typography>
+    </Stack>
   </Appointments.Appointment>
 );
 
 const AppointmentCalendar = () => {
   const today = new Date();
+  const dispatch = useDispatch();
+
+  const appointmentState = useSelector((state) => state.appointment);
 
   const [events, setEvents] = useState([]);
 
@@ -82,8 +95,29 @@ const AppointmentCalendar = () => {
     });
 
     appointmentsFormatted = appointments.map((item) => {
+      const date = new Date(item?.date);
+
       return {
         type: "appointment",
+        title: "Appointment",
+        // startDate: item?.date,
+        // endDate: item?.date,
+        startDate: new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          9,
+          0
+        ),
+        endDate: new Date(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          10,
+          0
+        ),
+        descriptin: item?.comment,
+        customer: item?.customer?.name,
         ...item,
       };
     });
@@ -92,8 +126,8 @@ const AppointmentCalendar = () => {
   };
 
   useEffect(() => {
-    formatEvents(appointments, weddings);
-  }, []);
+    formatEvents(appointmentState?.allData, weddings);
+  }, [appointmentState?.allData]);
 
   // const history = useHistory();
 
@@ -101,6 +135,11 @@ const AppointmentCalendar = () => {
     console.log(`Double-clicked date: ${data.startDate}`);
     // Call your custom function here
   };
+
+  useEffect(() => {
+    dispatch(clearAlert());
+    dispatch(getAllAppointments());
+  }, [dispatch]);
 
   return (
     <div>

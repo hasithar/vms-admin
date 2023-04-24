@@ -77,15 +77,15 @@ const AppointmentAdd = () => {
           description=""
         >
           <Grid container spacing="2">
-            <Grid item md={8}>
+            <Grid item md={12}>
               <UIForm params={formParams}>
                 <AppointmentForm params={formParams} />
               </UIForm>
             </Grid>
 
-            <Grid item md={4}>
+            {/* <Grid item md={4}>
               sidebar
-            </Grid>
+            </Grid> */}
           </Grid>
         </BoxedContent>
       </Page>

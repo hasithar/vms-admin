@@ -13,7 +13,8 @@ import {
 
 import appointmentReducer, {
   addAppointmentNewCustomer,
-  // getAllCustomers,
+  addAppointmentExistingCustomer,
+  getAllAppointments,
   // getCustomer,
   // addCustomer,
   // updateCustomer,
@@ -31,7 +32,8 @@ export {
   deleteParameter,
   appointmentReducer,
   addAppointmentNewCustomer,
-  //   getAllCustomers,
+  addAppointmentExistingCustomer,
+  getAllAppointments,
   //   getCustomer,
   //   addCustomer,
   //   updateCustomer,

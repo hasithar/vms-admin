@@ -29,7 +29,12 @@ import {
   deleteUser,
 } from "./User";
 
-import { appointmentReducer, addAppointmentNewCustomer } from "./Appointment";
+import {
+  appointmentReducer,
+  addAppointmentNewCustomer,
+  addAppointmentExistingCustomer,
+  getAllAppointments,
+} from "./Appointment";
 
 export {
   // customer
@@ -58,6 +63,8 @@ export {
   AppointmentForm,
   appointmentReducer,
   addAppointmentNewCustomer,
+  addAppointmentExistingCustomer,
+  getAllAppointments,
   // reservations
   ReservationCalendar,
   ReservationVenueForm,
