@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import { addCustomer } from "../../Customer";
 import { titleOptions, appointmentStatusOptions } from "@/constants";
 import styles from "./../styles/AppointmentForm.module.scss";
+import { addAppointmentNewCustomer } from "../../Appointment";
 
 const AppointmentForm = (props) => {
   const { params, handleSuccessDialog, handleErrorAlert } = props;
@@ -32,6 +33,7 @@ const AppointmentForm = (props) => {
 
   const dispatch = useDispatch();
   const customerState = useSelector((state) => state.customer);
+  const appointmentState = useSelector((state) => state.appointment);
   const alertState = useSelector((state) => state.alert);
 
   const [autocompleteLoading, setAutocompleteLoading] = useState();
@@ -102,11 +104,34 @@ const AppointmentForm = (props) => {
       customerType
     );
 
-    // if (values && params?.mode === "add") {
-    //   if (customerType === "new") {
+    const customerData = {
+      title: values?.title,
+      firstname: values?.firstname,
+      lastname: values?.lastname,
+      phone: values?.phone,
+      email: values?.email,
+      status: 1,
+    };
 
-    //   }
-    // }
+    const appointMentData = {
+      date: values?.date,
+      time: values?.time,
+      status: values?.status,
+      assignedTo: values?.assignedTo,
+      referredBy: values?.referredBy,
+      comments: values?.comments,
+    };
+
+    if (values && params?.mode === "add") {
+      if (customerType === "new") {
+        dispatch(
+          addAppointmentNewCustomer({
+            customerData: customerData,
+            appointMentData: appointMentData,
+          })
+        );
+      }
+    }
 
     // if (values && params?.mode === "edit") {
     //   dispatch(updateCustomer(params?.data?._id, values));
@@ -675,7 +700,7 @@ const AppointmentForm = (props) => {
                     fullWidth
                     type="submit"
                     size="large"
-                    loading={customerState?.loading}
+                    loading={appointmentState?.loading}
                     // loadingPosition="end"
                     sx={{
                       width: {

@@ -60,6 +60,7 @@ const PortalHeader = (props) => {
         <Toolbar
           sx={{
             minHeight: "3.6rem !important",
+            px: "0 !important",
           }}
           elevation={0}
         >
@@ -72,7 +73,7 @@ const PortalHeader = (props) => {
             noWrap
             sx={{
               flexGrow: 1,
-              fontSize: "0.85rem",
+              fontSize: "0.8rem",
               color: "#232323",
             }}
           >

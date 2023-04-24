@@ -5,6 +5,8 @@ export * from "./types/userTypes";
 // options
 export * from "./options/titleOptions";
 export * from "./options/genderOptions";
-export * from "./data/portalLinks.js";
 export * from "./options/userRoleOptions";
 export * from "./options/appointmentStatusOptions";
+// data
+export * from "./data/portalLinks.js";
+export * from "./data/guestListData";

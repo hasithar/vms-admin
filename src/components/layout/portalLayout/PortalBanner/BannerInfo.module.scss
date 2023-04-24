@@ -1,0 +1,24 @@
+@import "./../../../../assets/styles/global/colors";
+.wrapper {
+  margin-top: 1.2rem;
+}
+
+.countdown {
+  background: $secondary;
+  display: inline-flex !important;
+  padding: 0.3rem 0.6rem;
+
+  p {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  svg {
+    color: #fff;
+    font-size: 0.3rem;
+    margin: 0 0.6rem;
+  }
+}

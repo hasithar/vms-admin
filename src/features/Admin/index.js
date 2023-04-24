@@ -29,6 +29,8 @@ import {
   deleteUser,
 } from "./User";
 
+import { appointmentReducer, addAppointmentNewCustomer } from "./Appointment";
+
 export {
   // customer
   CustomerTable,
@@ -54,6 +56,8 @@ export {
   // appointments
   AppointmentCalendar,
   AppointmentForm,
+  appointmentReducer,
+  addAppointmentNewCustomer,
   // reservations
   ReservationCalendar,
   ReservationVenueForm,

@@ -18,7 +18,7 @@ const PortalLayout = ({ children }) => {
         <PortalNav />
 
         <Box component="main">
-          <Container maxWidth={false} sx={{ mt: 15, mb: 4 }}>
+          <Container maxWidth={false} sx={{ mt: 5, mb: 5 }}>
             {children}
           </Container>
         </Box>

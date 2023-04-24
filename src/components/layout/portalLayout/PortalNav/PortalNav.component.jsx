@@ -68,7 +68,7 @@ const PortalNav = () => {
               }}
             >
               <ParameterCard
-                title={parameter.title}
+                title={parameter.titleSingular}
                 description={parameter.description}
                 icon={parameter.icon}
                 slug={parameter.slug}
