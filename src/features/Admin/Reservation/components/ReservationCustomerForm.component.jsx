@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import LoadingButton from "@mui/lab/LoadingButton";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+// import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
@@ -28,6 +28,10 @@ import {
   addReservationNewCustomer,
   addReservationExistingCustomer,
 } from "@features/Admin";
+import {
+  ArrowBack as ArrowBackIcon,
+  ArrowForward as ArrowNextIcon,
+} from "@mui/icons-material";
 
 const ReservationCustomerForm = (props) => {
   const { params, handleSuccessDialog, handleErrorAlert } = props;
@@ -50,7 +54,7 @@ const ReservationCustomerForm = (props) => {
   };
 
   const formikRef = React.createRef();
-  const debug = false;
+  const debug = true;
 
   const newCustomerSchema = Yup.object({
     title: Yup.string().required("Title is Required"),
@@ -64,8 +68,10 @@ const ReservationCustomerForm = (props) => {
       .required("Phone number is required")
       .matches(/^[0-9-+]{10,}$/, "Please enter a valid phone number"),
     email: Yup.string().email().nullable(true),
-    date: Yup.date().required("Date is required"),
-    time: Yup.date().nullable(true),
+    address: Yup.string().required("Address is required"),
+    city: Yup.string().required("City is required"),
+    // date: Yup.date().required("Date is required"),
+    // time: Yup.date().nullable(true),
     referredBy: Yup.object().shape({
       id: Yup.string(),
       name: Yup.string(),
@@ -95,8 +101,10 @@ const ReservationCustomerForm = (props) => {
       "Please enter a valid phone number"
     ),
     email: Yup.string().email().nullable(true),
-    date: Yup.date().required("Date is required"),
-    time: Yup.date().nullable(true),
+    address: Yup.string().required("Address is required"),
+    city: Yup.string().required("City is required"),
+    // date: Yup.date().required("Date is required"),
+    // time: Yup.date().nullable(true),
     referredBy: Yup.object().shape({
       id: Yup.string(),
       name: Yup.string(),
@@ -121,8 +129,10 @@ const ReservationCustomerForm = (props) => {
     lastname: "",
     phone: "",
     email: "",
-    date: "",
-    time: "",
+    address: "",
+    city: "",
+    // date: "",
+    // time: "",
     referredBy: undefined,
     assignedTo: undefined,
     // status: "scheduled",
@@ -146,10 +156,10 @@ const ReservationCustomerForm = (props) => {
     const appointMentData = {
       date: values?.date,
       time: values?.time,
-      status: values?.status,
       assignedTo: values?.assignedTo,
       referredBy: values?.referredBy,
       comments: values?.comments,
+      status: "draft",
     };
 
     if (values && params?.mode === "add") {
@@ -236,7 +246,8 @@ const ReservationCustomerForm = (props) => {
           description: alertState?.description,
         };
 
-        handleSuccessDialog(message);
+        // handleSuccessDialog(message);
+        console.log("success");
       }
     };
 
@@ -488,10 +499,42 @@ const ReservationCustomerForm = (props) => {
                       size="small"
                     />
                   </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      id="address"
+                      name="address"
+                      label="Address"
+                      value={values.address}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={touched.address && Boolean(errors.address)}
+                      helperText={touched.address && errors.address}
+                      variant="standard"
+                      className={styles.textField}
+                      size="small"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <TextField
+                      fullWidth
+                      id="city"
+                      name="city"
+                      label="City"
+                      value={values.city}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={touched.city && Boolean(errors.city)}
+                      helperText={touched.city && errors.city}
+                      variant="standard"
+                      className={styles.textField}
+                      size="small"
+                    />
+                  </Grid>
                 </>
               )}
 
-              <Grid item xs={12} md={6}>
+              {/* <Grid item xs={12} md={6}>
                 <FormControl
                   fullWidth
                   error={touched.date && Boolean(errors.date)}
@@ -543,7 +586,7 @@ const ReservationCustomerForm = (props) => {
                     </FormHelperText>
                   )}
                 </FormControl>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} md={6}>
                 <Autocomplete
                   id="referredBy"
@@ -728,6 +771,7 @@ const ReservationCustomerForm = (props) => {
                     type="submit"
                     size="large"
                     loading={reservationState?.loading}
+                    endIcon={<ArrowNextIcon size="small" />}
                     // loadingPosition="end"
                     sx={{
                       width: {
@@ -736,7 +780,9 @@ const ReservationCustomerForm = (props) => {
                       },
                     }}
                   >
-                    {`Save ${params?.name?.single}`}
+                    {" "}
+                    Next
+                    {/* {`Save ${params?.name?.single}`} */}
                   </LoadingButton>
                 </Stack>
               </Grid>

@@ -33,16 +33,15 @@ const PortalMenu = () => {
         </Stack>
       </Box>
 
-      <Grid container>
-        <Grid item md={4}>
-          {menuItemsData.map((category) => (
+      <Grid container spacing={10}>
+        {menuItemsData.map((category) => (
+          <Grid item md={4} key={category?.type}>
             <MenuSet
-              key={category?.type}
               categoryTitle={category?.title}
               categoryItems={category?.items}
             />
-          ))}
-        </Grid>
+          </Grid>
+        ))}
       </Grid>
     </Container>
   );
