@@ -2,6 +2,7 @@ import ReservationCalendar from "./components/ReservationCalendar.component";
 import ReservationVenueForm from "./components/ReservationVenueForm.component";
 import ReservationDetailConfirm from "./components/ReservationDetailConfirm.component";
 import ReservationCustomerForm from "./components/ReservationCustomerForm.component";
+import ReservationPackageForm from "./components/ReservationPackageForm.component";
 // import CustomerTable from "./components/CustomerTable.component";
 // import CustomerForm from "./components/CustomerForm.component";
 
@@ -19,7 +20,7 @@ import reservationReducer, {
   // getAllCustomers,
   // getCustomer,
   // addCustomer,
-  // updateCustomer,
+  updateReservation,
   // deleteCustomer,
 } from "./slices/reservation.slice";
 
@@ -28,6 +29,7 @@ export {
   ReservationVenueForm,
   ReservationDetailConfirm,
   ReservationCustomerForm,
+  ReservationPackageForm,
   //   CustomerTable,
   getAllParameters,
   getSingleParameter,
@@ -40,7 +42,7 @@ export {
   //   getAllCustomers,
   //   getCustomer,
   //   addCustomer,
-  //   updateCustomer,
+  updateReservation,
   //   deleteCustomer,
   //   CustomerForm,
 };

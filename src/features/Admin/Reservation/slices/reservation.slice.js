@@ -217,34 +217,34 @@ export const addReservationExistingCustomer = (data) => async (dispatch) => {
 //   }
 // };
 
-// export const updateCustomer = (id, data) => async (dispatch) => {
-//   dispatch(clearAlert());
+export const updateReservation = (id, data) => async (dispatch) => {
+  dispatch(clearAlert());
 
-//   try {
-//     dispatch(setLoading(true));
-//     const response = await updateParameter(id, data);
-//     dispatch(updateSingle(response?.data));
-//     dispatch(
-//       showAlert({
-//         title: response?.message,
-//         description: response?.description,
-//         severity: response?.severity,
-//       })
-//     );
-//     dispatch(setLoading(false));
-//   } catch (error) {
-//     dispatch(setLoading(false));
-//     if (error.response) {
-//       dispatch(
-//         showAlert({
-//           title: error?.response?.data?.message,
-//           description: error?.response?.data?.description,
-//           severity: error?.response?.data?.severity,
-//         })
-//       );
-//     }
-//   }
-// };
+  try {
+    dispatch(setLoading(true));
+    const response = await updateParameter(id, data);
+    dispatch(updateSingle(response?.data));
+    dispatch(
+      showAlert({
+        title: response?.message,
+        description: response?.description,
+        severity: response?.severity,
+      })
+    );
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(setLoading(false));
+    if (error.response) {
+      dispatch(
+        showAlert({
+          title: error?.response?.data?.message,
+          description: error?.response?.data?.description,
+          severity: error?.response?.data?.severity,
+        })
+      );
+    }
+  }
+};
 
 // export const deleteCustomer = (id) => async (dispatch) => {
 //   dispatch(clearAlert());

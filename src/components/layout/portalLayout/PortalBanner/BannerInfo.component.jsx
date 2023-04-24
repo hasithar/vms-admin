@@ -8,7 +8,7 @@ const BannerInfo = () => {
     <Box className={styles.wrapper}>
       <Typography variant="body">We're tying the knot!</Typography>
       <Typography variant="h4" sx={{ fontFamily: "cinzel, serif", mt: 0.5 }}>
-        John & Jane
+        Sandun & Nisha
       </Typography>
 
       <Stack

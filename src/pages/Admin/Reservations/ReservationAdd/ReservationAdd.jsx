@@ -9,6 +9,7 @@ import {
   ReservationVenueForm,
   ReservationDetailConfirm,
   ReservationCustomerForm,
+  ReservationPackageForm,
   getAllCustomers,
   getAllUsers,
 } from "@/features/Admin";
@@ -18,10 +19,17 @@ import {
 const ReservationAdd = () => {
   const dispatch = useDispatch();
 
+  let steps = [];
+  let pageprops = {};
+
   const customerState = useSelector((state) => state.customer);
   const userState = useSelector((state) => state.user);
 
   const [activeStep, setActiveStep] = useState(0);
+  console.log(
+    "🚀 ~ file: ReservationAdd.jsx:29 ~ ReservationAdd ~ activeStep:",
+    activeStep
+  );
 
   useEffect(() => {
     const getCustomers = () => {
@@ -35,6 +43,18 @@ const ReservationAdd = () => {
     getCustomers();
     getUsers();
   }, [dispatch]);
+
+  const stepper = {
+    active: true,
+    steps: steps,
+    activeStep: activeStep,
+    setActiveStep: setActiveStep,
+    parent: {
+      label: "Reservations",
+      href: "/admin/reservations",
+    },
+  };
+
   const formParams = {
     name: {
       single: "Reservation",
@@ -48,28 +68,7 @@ const ReservationAdd = () => {
     states: { customers: customerState, users: userState },
   };
 
-  const steps = [
-    {
-      title: "Customer Details",
-      component: <ReservationCustomerForm params={formParams} />,
-    },
-    {
-      title: "Package Details",
-      component: "",
-    },
-    {
-      title: "Venue Details",
-
-      component: <ReservationVenueForm params={formParams} />,
-    },
-    {
-      title: "Complete",
-      componentTitle: "Confirm Reservation  Details",
-      component: <ReservationDetailConfirm params={formParams} />,
-    },
-  ];
-
-  const pageprops = {
+  pageprops = {
     title: "Create New Reservation",
     breadcrumbs: [
       {
@@ -113,29 +112,53 @@ const ReservationAdd = () => {
     },
   };
 
+  steps = [
+    {
+      title: "Customer Details",
+      component: (
+        <ReservationCustomerForm params={formParams} stepper={stepper} />
+      ),
+    },
+    {
+      title: "Package Details",
+      component: (
+        <ReservationPackageForm params={formParams} stepper={stepper} />
+      ),
+    },
+    {
+      title: "Venue Details",
+      component: <ReservationVenueForm params={formParams} stepper={stepper} />,
+    },
+    {
+      title: "Complete",
+      componentTitle: "Confirm Reservation  Details",
+      component: <ReservationDetailConfirm params={formParams} />,
+    },
+  ];
+
   return (
     <>
       <Page pageprops={pageprops}>
         <BoxedContent
-          title={steps[activeStep]?.componentTitle}
+          title={steps[activeStep]?.title}
           subtitle=""
           description=""
         >
           <Grid container>
-            <Grid item md={8}>
+            <Grid item md={12}>
               <UIForm params={formParams}>
                 <>{steps[activeStep].component}</>
                 {/* <ReservationForm params={formParams} /> */}
               </UIForm>
-              Step {activeStep + 1}
-              {pageprops?.widgets?.footer?.stepper?.active && (
+              Step {activeStep}
+              {/* {pageprops?.widgets?.footer?.stepper?.active && (
                 <UIStepperNav stepper={pageprops?.widgets?.footer?.stepper} />
-              )}
+              )} */}
             </Grid>
 
-            <Grid item md={4}>
+            {/* <Grid item md={4}>
               Summary
-            </Grid>
+            </Grid> */}
           </Grid>
         </BoxedContent>
       </Page>

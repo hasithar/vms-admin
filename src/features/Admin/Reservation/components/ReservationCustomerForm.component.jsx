@@ -15,6 +15,7 @@ import {
   Alert,
   ToggleButton,
   ToggleButtonGroup,
+  Snackbar,
 } from "@mui/material";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -34,8 +35,9 @@ import {
 } from "@mui/icons-material";
 
 const ReservationCustomerForm = (props) => {
-  const { params, handleSuccessDialog, handleErrorAlert } = props;
+  const { params, handleSuccessDialog, handleErrorAlert, stepper } = props;
   const { states } = params;
+  const { steps, activeStep, setActiveStep, parent } = stepper;
 
   const dispatch = useDispatch();
   const reservationState = useSelector((state) => state.reservation);
@@ -48,6 +50,14 @@ const ReservationCustomerForm = (props) => {
     customers: [],
   });
   const [customerType, setCustomerType] = React.useState("new");
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
 
   const handleCustomerType = (event, newType) => {
     setCustomerType(newType);
@@ -101,8 +111,8 @@ const ReservationCustomerForm = (props) => {
       "Please enter a valid phone number"
     ),
     email: Yup.string().email().nullable(true),
-    address: Yup.string().required("Address is required"),
-    city: Yup.string().required("City is required"),
+    address: Yup.string().nullable(true),
+    city: Yup.string().nullable(true),
     // date: Yup.date().required("Date is required"),
     // time: Yup.date().nullable(true),
     referredBy: Yup.object().shape({
@@ -150,6 +160,8 @@ const ReservationCustomerForm = (props) => {
       lastname: values?.lastname,
       phone: values?.phone,
       email: values?.email,
+      address: values?.address,
+      city: values?.city,
       status: 1,
     };
 
@@ -180,6 +192,8 @@ const ReservationCustomerForm = (props) => {
           })
         );
       }
+
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
 
     // if (values && params?.mode === "edit") {
@@ -238,38 +252,34 @@ const ReservationCustomerForm = (props) => {
     formatAutoCompleteData(states?.customers, states?.users);
   }, [states]);
 
-  useEffect(() => {
-    const handleSuccess = () => {
-      if (reservationState?.currentData && alertState.severity === "success") {
-        const message = {
-          title: alertState?.title,
-          description: alertState?.description,
-        };
+  // useEffect(() => {
+  //   const handleSuccess = () => {
+  //     if (reservationState?.currentData && alertState.severity === "success") {
+  //       const message = {
+  //         title: alertState?.title,
+  //         description: alertState?.description,
+  //       };
 
-        // handleSuccessDialog(message);
-        console.log("success");
-      }
-    };
+  //       // handleSuccessDialog(message);
+  //       // console.log("success");
+  //       setOpenSnackbar(true);
+  //       setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  //     }
+  //   };
 
-    const handleError = () => {
-      if (!reservationState?.currentData && alertState.severity === "error") {
-        const message = {
-          title: alertState?.title,
-          description: alertState?.description,
-        };
-        handleErrorAlert(message);
-      }
-    };
+  //   const handleError = () => {
+  //     if (!reservationState?.currentData && alertState.severity === "error") {
+  //       const message = {
+  //         title: alertState?.title,
+  //         description: alertState?.description,
+  //       };
+  //       handleErrorAlert(message);
+  //     }
+  //   };
 
-    handleSuccess();
-    handleError();
-  }, [
-    alertState,
-    reservationState,
-    handleErrorAlert,
-    handleSuccessDialog,
-    params,
-  ]);
+  //   handleSuccess();
+  //   handleError();
+  // }, [reservationState, alertState]);
 
   useEffect(() => {
     const prefillData = () => {
@@ -749,7 +759,7 @@ const ReservationCustomerForm = (props) => {
                     mt: 2,
                   }}
                 >
-                  <Link
+                  {/* <Link
                     to={params?.nav?.back ? params?.nav?.back : "../"}
                     style={{ display: "block" }}
                   >
@@ -760,12 +770,12 @@ const ReservationCustomerForm = (props) => {
                     >
                       Back to {params?.name?.multiple}
                     </Button>
-                  </Link>
+                  </Link> */}
 
                   <span style={{ flex: 1 }}>&nbsp;</span>
 
                   <LoadingButton
-                    color="secondary"
+                    color="primary"
                     variant="contained"
                     fullWidth
                     type="submit"
@@ -787,6 +797,20 @@ const ReservationCustomerForm = (props) => {
                 </Stack>
               </Grid>
             </Grid>
+
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={6000}
+              onClose={handleSnackbarClose}
+            >
+              <Alert
+                onClose={handleSnackbarClose}
+                severity="success"
+                sx={{ width: "100%" }}
+              >
+                Customer details updated!
+              </Alert>
+            </Snackbar>
 
             {debug && (
               <>
