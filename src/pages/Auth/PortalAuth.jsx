@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Container, Typography, Card, CardContent, Grid } from "@mui/material";
-import cardImage from "@assets/images/bg/auth_card_bg.jpg";
+import cardImage from "@assets/images/bg/customer_login_bg.jpg";
 import logo from "@assets/images/logo/logo.fullcolor.svg";
 import styles from "./PortalAuth.module.scss";
 

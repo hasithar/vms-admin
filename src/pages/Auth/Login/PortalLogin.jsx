@@ -14,6 +14,7 @@ import {
   IconButton,
   Divider,
   FormHelperText,
+  Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -100,9 +101,10 @@ const PortalLogin = () => {
           variant="h4"
           sx={{
             fontSize: {
-              xs: "1.8rem",
+              xs: "1.675rem",
             },
             marginBottom: "0.5rem",
+            color: "primary.main",
           }}
         >
           Welcome to Thotupola!
@@ -148,6 +150,11 @@ const PortalLogin = () => {
                   marginBottom: { xs: "1rem" },
                 }}
               >
+                <Grid item xs={12}>
+                  <Alert severity="info" sx={{ textAlign: "left" }}>
+                    Please use your reservation ID to login to the user portal
+                  </Alert>
+                </Grid>
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
@@ -215,7 +222,7 @@ const PortalLogin = () => {
                     type="submit"
                     size="large"
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     sx={{ marginTop: "1rem" }}
                     loading={authentication.isLoading}
                   >
@@ -223,7 +230,7 @@ const PortalLogin = () => {
                   </LoadingButton>
                 </Grid>
 
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <Button
                     component={RouterLink}
                     to="/auth/forgot-password"
@@ -232,7 +239,7 @@ const PortalLogin = () => {
                   >
                     Forgot password?
                   </Button>
-                </Grid>
+                </Grid> */}
               </Grid>
 
               {debug && (

@@ -1,0 +1,29 @@
+.wrapper {
+  padding-top: 3.6rem;
+  position: relative;
+}
+
+.container {
+  position: relative;
+  z-index: 5;
+  min-height: 15rem;
+  padding-top: 2.4rem;
+}
+
+.bannerWrap {
+  position: absolute;
+}
+
+.bannerImage {
+  display: block;
+  position: absolute;
+  inset: 3rem 0 0 0;
+  // height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.logo {
+  max-width: 15rem;
+}

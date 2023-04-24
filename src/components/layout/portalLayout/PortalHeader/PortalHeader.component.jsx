@@ -11,6 +11,7 @@ import {
   Typography,
   Badge,
   Stack,
+  Container,
 } from "@mui/material";
 import {
   EmailTwoTone as EmailTwoToneIcon,
@@ -55,52 +56,54 @@ const PortalHeader = (props) => {
       elevation={2}
       sx={open ? drawerOpen : drawerClose}
     >
-      <Toolbar
-        sx={{
-          minHeight: "3.6rem !important",
-        }}
-        elevation={0}
-      >
-        {/* <Search /> */}
-
-        <Typography
-          component="h1"
-          variant="h6"
-          color="inherit"
-          noWrap
+      <Container>
+        <Toolbar
           sx={{
-            flexGrow: 1,
-            fontSize: "0.85rem",
-            color: "#232323",
+            minHeight: "3.6rem !important",
           }}
+          elevation={0}
         >
-          <span style={{ color: "#93693E" }}>Thotupola Lakeside</span> Wedding
-          Planner
-          <div className={styles.tagline}>Let's plan your Wedding</div>
-        </Typography>
+          {/* <Search /> */}
 
-        <Stack
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="center"
-          alignContent="center"
-          spacing={2}
-        >
-          {/* <IconButton color="inherit" size="small">
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            sx={{
+              flexGrow: 1,
+              fontSize: "0.85rem",
+              color: "#232323",
+            }}
+          >
+            <span style={{ color: "#93693E" }}>Thotupola Lakeside</span> Wedding
+            Planner
+            <div className={styles.tagline}>Let's plan your Wedding</div>
+          </Typography>
+
+          <Stack
+            direction="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            alignContent="center"
+            spacing={2}
+          >
+            {/* <IconButton color="inherit" size="small">
             <Badge badgeContent={23} color="secondary">
               <NotificationsNoneTwoToneIcon />
             </Badge>
           </IconButton> */}
 
-          {/* <IconButton color="inherit" size="small">
+            {/* <IconButton color="inherit" size="small">
             <Badge badgeContent={2} color="secondary">
               <EmailTwoToneIcon />
             </Badge>
           </IconButton> */}
 
-          <Settings />
-        </Stack>
-      </Toolbar>
+            <Settings />
+          </Stack>
+        </Toolbar>
+      </Container>
     </AppBar>
   );
 };
