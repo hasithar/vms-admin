@@ -47,7 +47,7 @@ const AppointmentForm = (props) => {
   };
 
   const formikRef = React.createRef();
-  const debug = true;
+  const debug = false;
 
   const validationSchema = Yup.object({
     title: Yup.string().required("Title is Required"),

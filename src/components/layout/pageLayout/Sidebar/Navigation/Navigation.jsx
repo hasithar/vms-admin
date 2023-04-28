@@ -74,11 +74,11 @@ const Navigation = () => {
 
       <ListItemLink to="/admin/users" primary="Users" />
 
-      <ListItemLink to="/admin/inventory" primary="Inventory" />
+      {/* <ListItemLink to="/admin/inventory" primary="Inventory" /> */}
 
-      <ListItemLink to="/admin/invoices" primary="Invoices" />
+      {/* <ListItemLink to="/admin/invoices" primary="Invoices" /> */}
 
-      <ListItemLink to="/admin/suppliers" primary="Suppliers" />
+      {/* <ListItemLink to="/admin/suppliers" primary="Suppliers" /> */}
 
       <ListItemLink to="/admin/parameters" primary="Parameter Management" />
 

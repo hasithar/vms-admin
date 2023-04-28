@@ -17,6 +17,7 @@ import {
 import reservationReducer, {
   addReservationNewCustomer,
   addReservationExistingCustomer,
+  getAllReservations,
   // getAllCustomers,
   // getCustomer,
   // addCustomer,
@@ -39,6 +40,7 @@ export {
   reservationReducer,
   addReservationNewCustomer,
   addReservationExistingCustomer,
+  getAllReservations,
   //   getAllCustomers,
   //   getCustomer,
   //   addCustomer,

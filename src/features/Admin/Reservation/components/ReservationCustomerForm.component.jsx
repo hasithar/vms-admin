@@ -64,7 +64,7 @@ const ReservationCustomerForm = (props) => {
   };
 
   const formikRef = React.createRef();
-  const debug = true;
+  const debug = false;
 
   const newCustomerSchema = Yup.object({
     title: Yup.string().required("Title is Required"),

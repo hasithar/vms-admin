@@ -150,7 +150,7 @@ const ReservationAdd = () => {
                 <>{steps[activeStep].component}</>
                 {/* <ReservationForm params={formParams} /> */}
               </UIForm>
-              Step {activeStep}
+              {/* Step {activeStep} */}
               {/* {pageprops?.widgets?.footer?.stepper?.active && (
                 <UIStepperNav stepper={pageprops?.widgets?.footer?.stepper} />
               )} */}

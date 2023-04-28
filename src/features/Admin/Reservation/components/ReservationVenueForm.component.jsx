@@ -39,7 +39,7 @@ const ReservationVenueForm = (props) => {
   const alertState = useSelector((state) => state.alert);
 
   const formikRef = React.createRef();
-  const debug = true;
+  const debug = false;
 
   const validationSchema = Yup.object({
     date: Yup.date().required("Date is required"),
@@ -63,7 +63,7 @@ const ReservationVenueForm = (props) => {
       values
     );
 
-    dispatch(updateReservation(reservationState?.currentData?._id, values));
+    dispatch(updateReservation(reservationState?.currentData[0]?._id, values));
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     // if (values && params?.mode === "add") {
@@ -73,6 +73,10 @@ const ReservationVenueForm = (props) => {
     //   dispatch(updateCustomer(params?.data?._id, values));
     // }
   };
+  console.log(
+    "🚀 ~ file: ReservationVenueForm.component.jsx:76 ~ handleSubmit ~ reservationState:",
+    reservationState
+  );
 
   // useEffect(() => {
   //   const handleSuccess = () => {

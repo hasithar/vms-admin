@@ -43,6 +43,7 @@ import {
   addReservationNewCustomer,
   addReservationExistingCustomer,
   updateReservation,
+  getAllReservations,
   // getAllAppointments,
 } from "./Reservation";
 
@@ -79,6 +80,7 @@ export {
   reservationReducer,
   addReservationNewCustomer,
   addReservationExistingCustomer,
+  getAllReservations,
   updateReservation,
   ReservationCalendar,
   ReservationVenueForm,

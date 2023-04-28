@@ -11,7 +11,7 @@ import {
   AppointmentTooltip,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { clearAlert } from "@/features/Common";
-import { getAllAppointments } from "@features/Admin";
+import { getAllReservations } from "@features/Admin";
 import { Stack, Typography } from "@mui/material";
 
 export const weddings = [
@@ -19,14 +19,14 @@ export const weddings = [
     title: "Brochure Design Review",
     startDate: new Date(2023, 3, 20, 14, 10),
     endDate: new Date(2023, 3, 20, 15, 30),
-    descriptin: "lorem ipsum dolor sit amet",
+    descriptin: "Wedding",
     customer: "John Doe",
   },
   {
     title: "Brochure Design Review",
     startDate: new Date(2023, 3, 20, 16, 10),
     endDate: new Date(2023, 3, 20, 17, 30),
-    descriptin: "lorem ipsum dolor sit amet",
+    descriptin: "Wedding",
     customer: "John Doe",
   },
 ];
@@ -55,11 +55,15 @@ const ReservationCalendar = () => {
   const today = new Date();
   const dispatch = useDispatch();
 
-  const appointmentState = useSelector((state) => state.appointment);
+  const reservationState = useSelector((state) => state.reservation);
 
   const [events, setEvents] = useState([]);
 
   const formatEvents = (weddings) => {
+    console.log(
+      "🚀 ~ file: ReservationCalendar.component.jsx:63 ~ formatEvents ~ weddings:",
+      weddings
+    );
     let weddingsFormatted = [];
 
     weddingsFormatted = weddings.map((item) => {
@@ -91,6 +95,10 @@ const ReservationCalendar = () => {
     setEvents(weddingsFormatted);
   };
 
+  // useEffect(() => {
+  //   formatEvents(reservationState?.allData);
+  // }, [reservationState?.allData]);
+
   useEffect(() => {
     formatEvents(weddings);
   }, []);
@@ -104,7 +112,7 @@ const ReservationCalendar = () => {
 
   useEffect(() => {
     dispatch(clearAlert());
-    dispatch(getAllAppointments());
+    dispatch(getAllReservations());
   }, [dispatch]);
 
   return (

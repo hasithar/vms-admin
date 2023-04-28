@@ -90,7 +90,7 @@ const Login = () => {
 
   // redirect user to the dashboard upon successful login
   if (authentication.isLoggedIn && authentication.user) {
-    navigate("/admin/dashboard", { replace: true });
+    navigate("/admin/appointments", { replace: true });
   }
 
   return (

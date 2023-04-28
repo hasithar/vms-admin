@@ -52,25 +52,25 @@ export const { getAll, getSingle, addSingle, updateSingle, setLoading, clear } =
 // export const selectToken = (state) => state.authentication.token;
 // export const selectIsLoggedIn = (state) => state.authentication.isLoggedIn;
 
-// export const getAllAppointments = () => async (dispatch) => {
-//   try {
-//     dispatch(setLoading(true));
-//     const response = await getAllParameters();
-//     dispatch(getAll(response));
-//     dispatch(setLoading(false));
-//   } catch (error) {
-//     dispatch(setLoading(false));
-//     if (error.response) {
-//       dispatch(
-//         showAlert({
-//           title: error?.response?.data?.message,
-//           description: error?.response?.data?.description,
-//           severity: error?.response?.data?.severity,
-//         })
-//       );
-//     }
-//   }
-// };
+export const getAllReservations = () => async (dispatch) => {
+  try {
+    dispatch(setLoading(true));
+    const response = await getAllParameters();
+    dispatch(getAll(response));
+    dispatch(setLoading(false));
+  } catch (error) {
+    dispatch(setLoading(false));
+    if (error.response) {
+      dispatch(
+        showAlert({
+          title: error?.response?.data?.message,
+          description: error?.response?.data?.description,
+          severity: error?.response?.data?.severity,
+        })
+      );
+    }
+  }
+};
 
 // export const getCustomer = (id) => async (dispatch) => {
 //   dispatch(clearAlert());
